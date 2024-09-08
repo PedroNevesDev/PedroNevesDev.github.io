@@ -1,0 +1,354 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1b1b1b; /* Very dark background */
+    color: #e0e0e0; /* Light text color */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Custom Scrollbar for WebKit Browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #333; /* Dark background for the track */
+    border-radius: 10px; /* Rounded corners for the track */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #8bc34a; /* Light green thumb color */
+    border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #6a9e1b; /* Darker green when hovered */
+}
+
+/* Custom Scrollbar for Firefox */
+* {
+    scrollbar-width: thin; /* Thin scrollbar */
+    scrollbar-color: #8bc34a #333; /* Thumb and Track colors */
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #2d2d2d; /* Slightly lighter dark background */
+}
+
+/* Parallax */
+.parallax {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0; /* Ensure no extra margin around the parallax container */
+    padding: 0; /* Ensure no extra padding around the parallax container */
+    perspective: 1px; /* Apply perspective for better parallax effect */
+}
+
+.parallax-layer {
+    position: absolute;
+    top: 0; /* Ensure the layer starts at the top */
+    left: 0; /* Ensure the layer starts at the left */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-size: cover; /* Ensure background image covers the entire layer */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Do not repeat the background image */
+    box-sizing: border-box; /* Include padding and border in element's width and height */
+}
+
+/* Background Layers */
+.parallax-layer-1 {
+    background-image: url('background.png');
+    transform: translateZ(-2px) scale(3); /* Adjusted for a stronger parallax effect */
+    z-index: -3; /* Ensure it's below the content */
+}
+
+.parallax-layer-2 {
+    background-image: url('penis.png');
+    transform: translateZ(-1px) scale(2); /* Adjusted for a moderate parallax effect */
+    z-index: -2; /* Ensure it's below the layer 1 */
+}
+
+/* Foreground Layer */
+.parallax-layer-3 {
+    background-image: url('websitebg.png');
+    transform: translateZ(0) scale(1); /* Static foreground layer */
+    z-index: -1; /* Ensure it's below the layer 2 */
+}
+
+.parallax-content {
+    position: relative; /* Changed from absolute to relative */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #8bc34a; /* Light green */
+    text-shadow: 0 0 10px #8bc34a;
+    z-index: 1; /* Ensure it is above the parallax layers */
+}
+
+.parallax-content h1 {
+    font-size: 3em;
+    margin: 0;
+}
+
+.parallax-content p {
+    font-size: 1.5em;
+}
+
+/* Sections */
+.section {
+    padding: 60px 20px; /* Adjust padding to match your design */
+    text-align: center;
+    background-color: #1b1b1b; /* Dark forest background */
+}
+
+.section h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #8bc34a; /* Light green */
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #8bc34a;
+}
+
+/* Showreel Section */
+.showreel {
+    padding: 60px 20px;
+    background-color: #1b1b1b; /* Match the background color */
+    text-align: center;
+}
+
+.showreel h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #8bc34a; /* Light green */
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #8bc34a;
+}
+
+.showreel iframe {
+    max-width: 100%;
+    width: 80vw; /* Adjust width to 80% of the viewport width */
+    height: 45vw; /* Maintain 16:9 aspect ratio by setting height relative to width */
+    border-radius: 8px;
+    border: 3px solid #8bc34a; /* Light green border */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
+    object-fit: cover; /* Ensure the video covers the iframe without distortion */
+}
+
+
+
+
+/* About Me Section */
+.about-me-text {
+    margin-top: 20px;
+    font-size: 1.1em;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* Project Section */
+.projects-section {
+    padding: 60px 20px;
+    background-color: #1b1b1b; /* Match the background color */
+    text-align: center;
+}
+
+.projects-section h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #8bc34a; /* Light green */
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #8bc34a;
+}
+
+/* Center the projects container */
+.projects-container {
+    display: flex; /* Use flexbox for alignment */
+    flex-wrap: wrap; /* Allow wrapping of items */
+    justify-content: center; /* Center the items horizontally */
+    gap: 20px; /* Space between project cards */
+    margin-top: 20px;
+    max-width: 1200px; /* Limit the width of the container */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Project card styling */
+.project-card {
+    background-color: #2d2d2d; /* Slightly lighter dark background */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Darker shadow for depth */
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 350px; /* Ensure the card does not exceed 350px */
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+}
+
+.project-card img {
+    width: 100%;
+    height: auto;
+}
+
+.project-card .project-content {
+    padding: 15px;
+}
+
+.project-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.5em;
+    color: #e0e0e0; /* Light text color */
+}
+
+.project-card p {
+    margin: 0;
+    font-size: 1em;
+    color: #b0b0b0; /* Lighter text color */
+}
+
+/* Game Overview Section */
+.game-overview {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none; /* Initially hidden */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: hidden; /* Hide scrollbars */
+}
+
+.game-content {
+    background-color: #1b1b1b;
+    border-radius: 12px;
+    padding: 20px;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    text-align: center;
+    overflow: auto; /* Allow scrolling within the modal */
+    max-height: 90vh; /* Limit the height to prevent overflow */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Carousel Styles */
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    flex: 0 0 100%;
+}
+
+.carousel-slide img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.carousel-button {
+    background-color: #8bc34a; /* Light green */
+    border: none;
+    color: #1b1b1b; /* Dark text color */
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.8em;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: background-color 0.3s ease;
+}
+
+.carousel-button:hover {
+    background-color: #6a9e1b; /* Slightly darker light green */
+}
+
+.carousel-button.left {
+    left: 15px;
+}
+
+.carousel-button.right {
+    right: 15px;
+}
+
+.close-overview {
+    background-color: #e53935; /* Red for close button */
+    border: none;
+    color: #fff; /* White text color */
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 2.2em;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    transition: background-color 0.3s ease;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.close-overview:hover {
+    background-color: #c62828; /* Darker red */
+}
+
+/* Fade-in effect for sections */
+.section {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.section.fade-in {
+    opacity: 1;
+}
+
+/* View Overview Link */
+.view-overview-link {
+    color: #8bc34a; /* Light green */
+    text-decoration: none;
+    font-weight: bold;
+    padding-top: 10%;
+}
+
+.view-overview-link:hover {
+    text-decoration: underline;
+    color: #6a9e1b; /* Slightly darker light green */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

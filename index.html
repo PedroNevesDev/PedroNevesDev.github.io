@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Development Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+        <div class="parallax">
+            <div class="parallax-layer parallax-layer-1"></div>
+            <div class="parallax-layer parallax-layer-2"></div>
+            <div class="parallax-layer parallax-layer-3"></div>
+            <div class="parallax-content">
+                <h1>Game Development Portfolio</h1>
+                <p>Pedro Neves</p>
+            </div>
+        </div>
+
+    <section class="section about-me">
+        <h2>About Me</h2>
+        <p class="about-me-text">Welcome to my game development portfolio! I am Pedro Neves, a passionate game developer with a love for creating immersive and engaging experiences. I specialize in various aspects of game development, including design, coding, and animation. Explore my projects to see what I’ve been working on.</p>
+    </section>
+
+    <section class="section showreel">
+        <h2>Showreel</h2>
+        <iframe src="https://www.youtube.com/embed/z96REqKgDU0" 
+                title="YouTube video player" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen></iframe>
+    </section>
+    
+
+    <section id="projects" class="projects-section">
+        <h2>My Projects</h2>
+        <div id="projects-container" class="projects-container">
+            <!-- Project cards will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <section class="section contact">
+        <h2>Contact</h2>
+        <p>If you'd like to get in touch, feel free to email me at <a href="mailto:contact@pedroneves.com">contact@pedroneves.com</a>.</p>
+    </section>
+
+    <!-- Game Overview Modal -->
+    <div id="game-overview" class="game-overview">
+        <div class="game-content">
+            <button class="close-overview" onclick="closeGameOverview()">&times;</button>
+            <h2 id="game-title">Loading...</h2>
+            <div id="carousel" class="carousel-container">
+                <div class="carousel">
+                    <!-- Carousel slides will be dynamically inserted here -->
+                </div>
+                <button class="carousel-button left" onclick="prevSlide()">&#10094;</button>
+                <button class="carousel-button right" onclick="nextSlide()">&#10095;</button>
+            </div>
+            <p id="game-description">Loading...</p>
+            <div id="unity-container">
+                <!-- Unity build will be embedded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/scripts.js"></script>
+    <script src="js/gameoverview.js"></script>
+</body>
+</html>
+
+
+
+
+
