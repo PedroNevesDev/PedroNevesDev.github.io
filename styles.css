@@ -3,7 +3,7 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #1b1b1b; /* Very dark background */
+    background-color: #0A0A0A; /* Very dark background */
     color: #e0e0e0; /* Light text color */
     overflow-x: hidden; /* Prevent horizontal scroll */
 }
@@ -106,7 +106,7 @@ header {
 .section {
     padding: 60px 20px; /* Adjust padding to match your design */
     text-align: center;
-    background-color: #1b1b1b; /* Dark forest background */
+    background-color: #0A0A0A; /* Dark forest background */
 }
 
 .section h2 {
@@ -120,7 +120,7 @@ header {
 /* Showreel Section */
 .showreel {
     padding: 60px 20px;
-    background-color: #1b1b1b; /* Match the background color */
+    background-color: #0A0A0A; /* Match the background color */
     text-align: center;
 }
 
@@ -156,7 +156,7 @@ header {
 /* Project Section */
 .projects-section {
     padding: 60px 20px;
-    background-color: #1b1b1b; /* Match the background color */
+    background-color: #0A0A0A; /* Match the background color */
     text-align: center;
 }
 
@@ -339,6 +339,41 @@ header {
     color: #6a9e1b; /* Slightly darker light green */
 }
 
+.about-me-text-container {
+    max-width: 800px; /* Set a maximum width */
+    margin: 0 auto; /* Center the container */
+    padding: 0 20px; /* Optional: Add horizontal padding */
+    text-align: left; /* Align text to the left within the container */
+}
+
+.about-me-text {
+    margin-top: 20px;
+    font-size: 1.1em;
+    line-height: 1.6; /* Increase line height for better readability */
+    letter-spacing: 0.5px; /* Add slight letter spacing */
+    text-align: match-parent; /* Justify text for even spacing on both sides */
+}
+footer {
+    background-color: #2d2d2d; /* Dark background for footer */
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Space between icons */
+}
+
+.social-icon {
+    width: 40px; /* Set desired icon size */
+    height: auto; /* Maintain aspect ratio */
+    transition: transform 0.3s; /* Add transition for hover effect */
+}
+
+.social-icon:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+}
 
 
 

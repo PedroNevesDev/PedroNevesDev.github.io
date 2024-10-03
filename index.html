@@ -7,19 +7,23 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-        <div class="parallax">
-            <div class="parallax-layer parallax-layer-1"></div>
-            <div class="parallax-layer parallax-layer-2"></div>
-            <div class="parallax-layer parallax-layer-3"></div>
-            <div class="parallax-content">
-                <h1>Game Development Portfolio</h1>
-                <p>Pedro Neves</p>
-            </div>
+    <div class="parallax">
+        <div class="parallax-layer parallax-layer-1"></div>
+        <div class="parallax-layer parallax-layer-2"></div>
+        <div class="parallax-layer parallax-layer-3"></div>
+        <div class="parallax-content">
+            <h1>Game Development Portfolio</h1>
+            <p>Pedro Neves</p>
         </div>
+    </div>
 
     <section class="section about-me">
         <h2>About Me</h2>
-        <p class="about-me-text">Welcome to my game development portfolio! I am Pedro Neves, a passionate game developer with a love for creating immersive and engaging experiences. I specialize in various aspects of game development, including design, coding, and animation. Explore my projects to see what I’ve been working on.</p>
+        <div class="about-me-text-container"> <!-- Add a container div -->
+            <p class="about-me-text">I'm Pedro Neves, a game developer who thrives on creating compelling and innovative experiences. With expertise in C#, Unity, and Unreal Engine, I focus on pushing the limits of gameplay to deliver engaging and challenging mechanics. I use Scrum and sprint methodologies to ensure efficient project management and that I meet deadlines.</p>
+        
+            <p class="about-me-text">I enjoy taking established concepts and turning them upside down, crafting experiences that challenge players in unexpected ways. Explore my projects to see how I turn concepts into reality.</p>
+        </div>
     </section>
 
     <section class="section showreel">
@@ -31,17 +35,11 @@
                 allowfullscreen></iframe>
     </section>
     
-
     <section id="projects" class="projects-section">
         <h2>My Projects</h2>
         <div id="projects-container" class="projects-container">
             <!-- Project cards will be dynamically inserted here -->
         </div>
-    </section>
-
-    <section class="section contact">
-        <h2>Contact</h2>
-        <p>If you'd like to get in touch, feel free to email me at <a href="mailto:contact@pedroneves.com">contact@pedroneves.com</a>.</p>
     </section>
 
     <!-- Game Overview Modal -->
@@ -63,10 +61,30 @@
         </div>
     </div>
 
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-container">
+            <a href="https://www.linkedin.com/in/pedroneves-dev/" target="_blank">
+                <img src="https://www.favicon.cc/favicon/64280" alt="LinkedIn" class="social-icon" style="width: 24px; height: 24px;">
+            </a>
+            <a href="https://itch.io/profile/YOUR_PROFILE" target="_blank">
+                <img src="https://www.favicon.cc/favicon/40906" alt="Itch.io" class="social-icon" style="width: 24px; height: 24px;">
+            </a>
+            <a href="https://github.com/YOUR_PROFILE" target="_blank">
+                <img src="https://www.favicon.cc/favicon/49864" alt="GitHub" class="social-icon" style="width: 24px; height: 24px;">
+            </a>
+        </div>
+        <p>Email: <a href="mailto:pedronevesdev.info@gmail.com">pedronevesdev.info@gmail.com</a></p>
+        <p>&copy; 2024 Pedro Neves. All rights reserved.</p>
+    </footer>
+
     <script src="js/scripts.js"></script>
     <script src="js/gameoverview.js"></script>
 </body>
 </html>
+
+
+
 
 
 
