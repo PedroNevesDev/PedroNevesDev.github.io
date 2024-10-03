@@ -34,6 +34,9 @@ function loadGameOverview(projectPath) {
         // Load carousel images and videos
         loadCarousel(projectPath);
 
+        // Load related links
+        loadRelatedLinks(projectPath);
+
         // Check if the Unity build exists and setup Unity build button
         checkUnityBuild(projectPath);
     })
@@ -105,6 +108,75 @@ function setupUnityBuild(projectPath) {
         unityIframe.style.display = 'block';
         playButton.style.display = 'none';
     });
+}
+
+// Load related links
+function loadRelatedLinks(projectPath) {
+    const linksSection = document.getElementById('links-section');
+    const linksList = document.getElementById('links-list');
+
+    // Try to fetch links.json or links.txt
+    fetch(`${projectPath}links.json`)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                // Try fetching links.txt if links.json doesn't exist
+                return fetch(`${projectPath}links.txt`).then(response => response.text());
+            }
+        })
+        .then(data => {
+            if (typeof data === 'string') {
+                // Parse links.txt if loaded as text
+                const links = parseLinksFromText(data);
+                if (links.length > 0) {
+                    displayLinks(links, linksList, linksSection);
+                } else {
+                    hideLinksSection(linksSection);
+                }
+            } else if (Array.isArray(data)) {
+                // If data is a JSON array, display links directly
+                if (data.length > 0) {
+                    displayLinks(data, linksList, linksSection);
+                } else {
+                    hideLinksSection(linksSection);
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Failed to load links:', error);
+            hideLinksSection(linksSection); // Hide links section if fetching fails
+        });
+}
+
+function parseLinksFromText(text) {
+    const lines = text.split('\n');
+    const links = [];
+    lines.forEach(line => {
+        const [textToDisplay, url] = line.split(',');
+        if (textToDisplay && url) {
+            links.push({ textToDisplay: textToDisplay.trim(), url: url.trim() });
+        }
+    });
+    return links;
+}
+
+function displayLinks(links, linksList, linksSection) {
+    linksSection.style.display = 'block'; // Show the section
+    linksList.innerHTML = ''; // Clear any previous links
+
+    links.forEach(link => {
+        const listItem = document.createElement('li');
+        const linkElement = document.createElement('a');
+        linkElement.href = link.url;
+        linkElement.textContent = link.textToDisplay;
+        listItem.appendChild(linkElement);
+        linksList.appendChild(listItem);
+    });
+}
+
+function hideLinksSection(linksSection) {
+    linksSection.style.display = 'none';
 }
 
 
