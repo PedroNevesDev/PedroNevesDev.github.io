@@ -41,34 +41,29 @@ body {
     color: #d0d0d0;
 }
 
-/* Carousel container */
+/* Carousel container styles */
 .carousel-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px 0;
     position: relative;
-    max-width: 100%;
-    overflow: hidden;
-    height: 200px; /* Adjusted height */
-    background-color: #2a2a2a; /* Slightly lighter background for contrast */
-    border-radius: 8px;
+    width: 100%; /* Make the carousel take full width of its parent container */
+    overflow: hidden; /* Hide overflow of slides */
 }
 
-/* Carousel styling */
-.carousel {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    width: 100%;
-}
-
+/* Style for individual carousel slides (both images and videos) */
 .carousel-slide {
-    min-width: calc(33.333% - 10px); /* Adjust to fit three images at a time */
-    margin: 0 5px; /* Space between slides */
-    height: 100%;
-    object-fit: cover; /* Ensures images fit within the carousel's height */
-    border-radius: 4px;
+    width: 100%; /* Set the slide width to 100% of the carousel */
+    height: auto; /* Automatically adjust height to maintain aspect ratio */
+    max-height: 600px; /* Optional: set a max height for the carousel */
+    object-fit: cover; /* Ensures the image covers the container while maintaining aspect ratio */
+    display: block; /* Make sure images are treated as block elements */
 }
+
+/* Ensure videos also follow the same scaling behavior */
+.carousel-slide video {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Make sure video fits the container */
+}
+
 
 /* Carousel buttons */
 .carousel-button {
