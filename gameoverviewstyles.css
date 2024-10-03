@@ -46,6 +46,7 @@ body {
     position: relative;
     width: 100%; /* Make the carousel take full width of its parent container */
     overflow: hidden; /* Hide overflow of slides */
+    margin-bottom: 20px;
 }
 
 /* Style for individual carousel slides (both images and videos) */
