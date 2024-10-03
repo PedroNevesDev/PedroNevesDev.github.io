@@ -1,1 +1,1 @@
-Its my newest scale portal based puzzle game.
+Created for the GMTK Game Jam 2024 with the theme "Build to Scale," Sol is a portal-based puzzle platformer that allows players to use portals to scale themselves or other objects to complete various puzzles.

@@ -63,7 +63,10 @@ const projectsContainer = document.getElementById('projects-container');
 // List of project folders (add more project folders here as needed)
 const projects = [
     'SOL',
-    'SOL2',
+    'PerfectClue',
+    'Lou',
+    'Plantaforma',
+    'FryMe',
     // Add more projects as needed
 ];
 
@@ -89,8 +92,8 @@ projects.forEach(project => {
             <img src="${imageUrl}" alt="${title}">
             <div class="project-content">
                 <h3>${title}</h3>
-                <p>${description}</p></br>
-                <a href="gameoverview.html?project=${project}" class="view-overview-link">View Overview</a>
+                <p class="project-card-text">${description}</p></br>
+                <a href="gameoverview.html?project=${project}" class="view-overview-link">Game Overview</a>
             </div>
         `;
 

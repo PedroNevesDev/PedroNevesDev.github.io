@@ -5,6 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Development Portfolio</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Add styles for footer and social icons */
+        footer {
+            background-color: #1b1b1b; /* Dark background */
+            color: white; /* White text */
+            text-align: center;
+            padding: 20px;
+            position: relative; /* To position footer correctly */
+            bottom: 0; /* Align footer at the bottom */
+            width: 100%; /* Full width */
+        }
+
+        .footer-container {
+            margin-bottom: 10px; /* Space below icons */
+        }
+
+        .social-icon {
+            width: 24px; /* Icon width */
+            height: 24px; /* Icon height */
+            margin: 0 10px; /* Margin between icons */
+            filter: brightness(0) invert(1); /* Make icons white */
+        }
+    </style>
 </head>
 <body>
     <div class="parallax">
@@ -19,9 +42,8 @@
 
     <section class="section about-me">
         <h2>About Me</h2>
-        <div class="about-me-text-container"> <!-- Add a container div -->
+        <div class="about-me-text-container">
             <p class="about-me-text">I'm Pedro Neves, a game developer who thrives on creating compelling and innovative experiences. With expertise in C#, Unity, and Unreal Engine, I focus on pushing the limits of gameplay to deliver engaging and challenging mechanics. I use Scrum and sprint methodologies to ensure efficient project management and that I meet deadlines.</p>
-        
             <p class="about-me-text">I enjoy taking established concepts and turning them upside down, crafting experiences that challenge players in unexpected ways. Explore my projects to see how I turn concepts into reality.</p>
         </div>
     </section>
@@ -34,7 +56,7 @@
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowfullscreen></iframe>
     </section>
-    
+
     <section id="projects" class="projects-section">
         <h2>My Projects</h2>
         <div id="projects-container" class="projects-container">
@@ -65,16 +87,16 @@
     <footer>
         <div class="footer-container">
             <a href="https://www.linkedin.com/in/pedroneves-dev/" target="_blank">
-                <img src="https://www.favicon.cc/favicon/64280" alt="LinkedIn" class="social-icon" style="width: 24px; height: 24px;">
+                <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" class="social-icon">
             </a>
-            <a href="https://itch.io/profile/YOUR_PROFILE" target="_blank">
-                <img src="https://www.favicon.cc/favicon/40906" alt="Itch.io" class="social-icon" style="width: 24px; height: 24px;">
+            <a href="https://pedronevesdev.itch.io/" target="_blank">
+                <img src="itchio-textless-black.png" alt="Itch.io" class="social-icon">
             </a>
-            <a href="https://github.com/YOUR_PROFILE" target="_blank">
-                <img src="https://www.favicon.cc/favicon/49864" alt="GitHub" class="social-icon" style="width: 24px; height: 24px;">
+            <a href="https://github.com/PedroNevesDev" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" class="social-icon">
             </a>
         </div>
-        <p>Email: <a href="mailto:pedronevesdev.info@gmail.com">pedronevesdev.info@gmail.com</a></p>
+        <p><a href="mailto:pedronevesdev.info@gmail.com" style="color: white;">pedronevesdev.info@gmail.com</a></p>
         <p>&copy; 2024 Pedro Neves. All rights reserved.</p>
     </footer>
 
@@ -82,6 +104,9 @@
     <script src="js/gameoverview.js"></script>
 </body>
 </html>
+
+
+
 
 
 

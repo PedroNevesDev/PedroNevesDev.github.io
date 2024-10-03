@@ -7,7 +7,9 @@ body {
     color: #e0e0e0; /* Light text color */
     overflow-x: hidden; /* Prevent horizontal scroll */
 }
-
+a{
+    color: #32CD32;
+}
 /* Custom Scrollbar for WebKit Browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
     width: 12px;
@@ -70,14 +72,14 @@ header {
 }
 
 .parallax-layer-2 {
-    background-image: url('penis.png');
+    background-image: url('middleground.png');
     transform: translateZ(-1px) scale(2); /* Adjusted for a moderate parallax effect */
     z-index: -2; /* Ensure it's below the layer 1 */
 }
 
 /* Foreground Layer */
 .parallax-layer-3 {
-    background-image: url('websitebg.png');
+    background-image: url('foreground.png');
     transform: translateZ(0) scale(1); /* Static foreground layer */
     z-index: -1; /* Ensure it's below the layer 2 */
 }
@@ -178,6 +180,7 @@ header {
     max-width: 1200px; /* Limit the width of the container */
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 30px; /* Space below icons */
 }
 
 /* Project card styling */
@@ -353,16 +356,27 @@ header {
     letter-spacing: 0.5px; /* Add slight letter spacing */
     text-align: match-parent; /* Justify text for even spacing on both sides */
 }
+/* Add styles for footer and social icons */
 footer {
-    background-color: #2d2d2d; /* Dark background for footer */
-    padding: 20px 0;
+    background-color: #1b1b1b; /* Dark background */
+    color: white; /* White text */
     text-align: center;
+    padding: 20px;
+    position: relative; /* To position footer correctly */
+    bottom: 0; /* Align footer at the bottom */
+    width: 100%; /* Full width */
 }
 
 .footer-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px; /* Space between icons */
+    margin-bottom: 10px; /* Space below icons */
+    margin-top: 10px; /* Space below icons */
+}
+
+.social-icon {
+    width: 24px; /* Icon width */
+    height: 24px; /* Icon height */
+    margin: 0 10px; /* Margin between icons */
+    filter: brightness(0) invert(1); /* Make icons white */
 }
 
 .social-icon {
@@ -377,7 +391,9 @@ footer {
 
 
 
-
+.project-card-text{
+    text-align:justify;
+}
 
 
 

@@ -1,4 +1,6 @@
+// JavaScript for game overview page
 document.addEventListener('DOMContentLoaded', function () {
+    // Get the project name from the URL parameters
     const params = new URLSearchParams(window.location.search);
     const project = params.get('project');
 
@@ -7,7 +9,10 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
+    // Base path for the project folder
     const projectPath = `projects/${project}/gameoverview/`;
+
+    // Load game overview data
     loadGameOverview(projectPath);
 });
 
@@ -17,7 +22,7 @@ function displayError(message) {
 }
 
 function loadGameOverview(projectPath) {
-    // Load title and description
+    // Fetch title and description from the project folder
     Promise.all([
         fetch(`${projectPath}title.txt`).then(response => response.ok ? response.text() : 'Unknown Title'),
         fetch(`${projectPath}description.txt`).then(response => response.ok ? response.text() : 'No description available.')
@@ -29,7 +34,10 @@ function loadGameOverview(projectPath) {
         // Load carousel images and videos
         loadCarousel(projectPath);
 
-        // Check if the unitybuild folder exists and setup the Unity build button
+        // Load related links
+        loadRelatedLinks(projectPath);
+
+        // Check if the Unity build exists and setup Unity build button
         checkUnityBuild(projectPath);
     })
     .catch(error => {
@@ -39,131 +47,55 @@ function loadGameOverview(projectPath) {
 }
 
 function loadCarousel(projectPath) {
-    const carousel = document.getElementById('carousel');
-    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-    const videoExtensions = ['mp4', 'webm', 'ogg'];
-    let mediaIndex = 1;
-    let mediaFound = false;
+    const carouselContainer = document.getElementById('carousel');
+    const mediaExtensions = ['jpg', 'jpeg', 'png', 'mp4', 'webm', 'ogg'];
 
-    const loadImageOrVideo = (index) => {
-        const imageUrls = imageExtensions.map(ext => `${projectPath}carousel/image${index}.${ext}`);
-        const videoUrls = videoExtensions.map(ext => `${projectPath}carousel/video${index}.${ext}`);
-
-        // Try loading an image
-        Promise.any(imageUrls.map(url => fetch(url).then(res => res.ok ? url : Promise.reject())))
-            .then(imageUrl => {
-                mediaFound = true;
-                addMediaToCarousel(imageUrl, 'image', index);
-                loadImageOrVideo(index + 1); // Load the next media
-            })
-            .catch(() => {
-                // Try loading a video if no image is found
-                Promise.any(videoUrls.map(url => fetch(url).then(res => res.ok ? url : Promise.reject())))
-                    .then(videoUrl => {
-                        mediaFound = true;
-                        addMediaToCarousel(videoUrl, 'video', index);
-                        loadImageOrVideo(index + 1); // Load the next media
-                    })
-                    .catch(() => {
-                        // When all images and videos are checked, hide the carousel if no media is found
-                        if (index === 1 && !mediaFound) {
-                            hideCarousel();
-                        } else {
-                            loadImageOrVideo(index + 1); // Attempt to load the next index even if previous ones failed
-                        }
-                    });
+    // Fetch the list of media files dynamically from the folder
+    fetch(`${projectPath}carousel/files.json`)
+        .then(response => response.json())
+        .then(files => {
+            files.forEach(file => {
+                const fileExtension = file.split('.').pop().toLowerCase();
+                if (mediaExtensions.includes(fileExtension)) {
+                    const mediaType = fileExtension.startsWith('mp') ? 'video' : 'image';
+                    addMediaToCarousel(`${projectPath}carousel/${file}`, mediaType);
+                }
             });
-    };
-
-    loadImageOrVideo(mediaIndex);
-    setupCarouselNavigation();
+        })
+        .catch(error => {
+            console.error('Failed to load carousel media files:', error);
+            displayError('Failed to load carousel media.');
+        });
 }
 
-function addMediaToCarousel(mediaUrl, type, index) {
+function addMediaToCarousel(mediaUrl, type) {
     const carousel = document.getElementById('carousel');
-    const mediaElement = document.createElement('img');
-    mediaElement.className = 'carousel-slide';
-    mediaElement.src = mediaUrl;
-    mediaElement.alt = `${type} ${index}`;
-    mediaElement.dataset.type = type;
-    mediaElement.dataset.url = mediaUrl;
+    const mediaElement = document.createElement(type === 'video' ? 'video' : 'img');
+
+    if (type === 'video') {
+        mediaElement.src = mediaUrl;
+        mediaElement.controls = true; // Add controls for video
+        mediaElement.className = 'carousel-slide';
+    } else {
+        mediaElement.src = mediaUrl;
+        mediaElement.className = 'carousel-slide';
+        mediaElement.alt = 'Image slide';
+    }
+    
     carousel.appendChild(mediaElement);
-
-    // Display the first media in the selection area by default
-    if (index === 1) {
-        setSelectedContent(mediaUrl, type);
-    }
-
-    mediaElement.addEventListener('click', () => {
-        setSelectedContent(mediaUrl, type);
-    });
-}
-
-function setSelectedContent(url, type) {
-    const selectedImage = document.getElementById('selected-image');
-    const selectedVideo = document.getElementById('selected-video');
-
-    if (type === 'image') {
-        selectedImage.style.display = 'block';
-        selectedImage.src = url;
-        selectedVideo.style.display = 'none';
-    } else if (type === 'video') {
-        selectedVideo.style.display = 'block';
-        selectedVideo.src = url;
-        selectedImage.style.display = 'none';
-    }
-}
-
-function hideCarousel() {
-    const carouselContainer = document.getElementById('carousel-container');
-    carouselContainer.style.display = 'none';
-    const selectedContentContainer = document.getElementById('selected-content-container');
-    selectedContentContainer.style.display = 'none';
-}
-
-function setupCarouselNavigation() {
-    const carousel = document.getElementById('carousel');
-    const prevButton = document.getElementById('prev-button');
-    const nextButton = document.getElementById('next-button');
-    let currentIndex = 0;
-
-    const updateCarousel = () => {
-        const slideWidth = carousel.clientWidth / 6; // Adjust to show 6 slides at a time
-        carousel.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
-    };
-
-    nextButton.addEventListener('click', () => {
-        const totalSlides = carousel.children.length;
-        if (currentIndex < totalSlides - 6) { // Allow next if there are more than 6 slides
-            currentIndex++;
-            updateCarousel();
-        }
-    });
-
-    prevButton.addEventListener('click', () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            updateCarousel();
-        }
-    });
-
-    window.addEventListener('resize', updateCarousel);
 }
 
 function checkUnityBuild(projectPath) {
-    // Check if the Unity build folder exists
     fetch(`${projectPath}unitybuild/index.html`)
         .then(response => {
             if (response.ok) {
                 setupUnityBuild(projectPath);
             } else {
-                // Hide the Play button if the unitybuild folder does not exist
-                document.getElementById('play-button').style.display = 'none';
+                document.getElementById('play-button').style.display = 'none'; // Hide the play button if Unity build does not exist
             }
         })
         .catch(() => {
-            // Hide the Play button if there was an error fetching the Unity build
-            document.getElementById('play-button').style.display = 'none';
+            document.getElementById('play-button').style.display = 'none'; // Hide the play button on error
         });
 }
 
@@ -178,16 +110,74 @@ function setupUnityBuild(projectPath) {
     });
 }
 
+// Load related links
+function loadRelatedLinks(projectPath) {
+    const linksSection = document.getElementById('links-section');
+    const linksList = document.getElementById('links-list');
 
+    // Try to fetch links.json or links.txt
+    fetch(`${projectPath}links.json`)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                // Try fetching links.txt if links.json doesn't exist
+                return fetch(`${projectPath}links.txt`).then(response => response.text());
+            }
+        })
+        .then(data => {
+            if (typeof data === 'string') {
+                // Parse links.txt if loaded as text
+                const links = parseLinksFromText(data);
+                if (links.length > 0) {
+                    displayLinks(links, linksList, linksSection);
+                } else {
+                    hideLinksSection(linksSection);
+                }
+            } else if (Array.isArray(data)) {
+                // If data is a JSON array, display links directly
+                if (data.length > 0) {
+                    displayLinks(data, linksList, linksSection);
+                } else {
+                    hideLinksSection(linksSection);
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Failed to load links:', error);
+            hideLinksSection(linksSection); // Hide links section if fetching fails
+        });
+}
 
+function parseLinksFromText(text) {
+    const lines = text.split('\n');
+    const links = [];
+    lines.forEach(line => {
+        const [textToDisplay, url] = line.split(',');
+        if (textToDisplay && url) {
+            links.push({ textToDisplay: textToDisplay.trim(), url: url.trim() });
+        }
+    });
+    return links;
+}
 
+function displayLinks(links, linksList, linksSection) {
+    linksSection.style.display = 'block'; // Show the section
+    linksList.innerHTML = ''; // Clear any previous links
 
+    links.forEach(link => {
+        const listItem = document.createElement('li');
+        const linkElement = document.createElement('a');
+        linkElement.href = link.url;
+        linkElement.textContent = link.textToDisplay;
+        listItem.appendChild(linkElement);
+        linksList.appendChild(listItem);
+    });
+}
 
-
-
-
-
-
+function hideLinksSection(linksSection) {
+    linksSection.style.display = 'none';
+}
 
 
 
