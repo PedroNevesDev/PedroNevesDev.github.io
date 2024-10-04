@@ -51,19 +51,31 @@ function loadCarousel(projectPath) {
     fetch(`${projectPath}carousel/files.json`)
         .then(response => response.json())
         .then(files => {
-            files.forEach(file => {
+            // Filter out valid media files
+            const validFiles = files.filter(file => {
                 const fileExtension = file.split('.').pop().toLowerCase();
-                if (mediaExtensions.includes(fileExtension)) {
-                    const mediaType = fileExtension.startsWith('mp') ? 'video' : 'image';
-                    addMediaToCarousel(`${projectPath}carousel/${file}`, mediaType);
-                }
+                return mediaExtensions.includes(fileExtension);
             });
+
+            // Add media files to the carousel
+            validFiles.forEach(file => {
+                const fileExtension = file.split('.').pop().toLowerCase();
+                const mediaType = fileExtension.startsWith('mp') ? 'video' : 'image';
+                addMediaToCarousel(`${projectPath}carousel/${file}`, mediaType);
+            });
+
+            // Hide navigation buttons if only one file exists
+            if (validFiles.length <= 1) {
+                document.getElementById('prev-button').style.display = 'none';
+                document.getElementById('next-button').style.display = 'none';
+            }
         })
         .catch(error => {
             console.error('Failed to load carousel media files:', error);
             displayError('Failed to load carousel media.');
         });
 }
+
 
 function addMediaToCarousel(mediaUrl, type) {
     const carousel = document.getElementById('carousel');
