@@ -1,1 +1,1 @@
-Created for the Global Game Jam 2024 with the theme "Make Me Laugh," Fry Me is a chaotic 1v1 game featuring a single, unstoppable ball and a frying pan to hit it, making it move even faster with each strike. The faster the ball, the more dangerous—and exciting—the game becomes.
+Created for the Global Game Jam 2024 with the theme "Make Me Laugh," Fry Me is a fast-paced 1v1 game where players use a frying pan to hit a single, unstoppable ball. Each hit speeds up the ball, increasing both the danger and excitement.

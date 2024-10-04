@@ -1,1 +1,1 @@
-Created for the Global Game Jam 2023 with the theme "Roots," Plantaforma is a 2D platformer featuring a unique mechanic: water as a finite resource. Use this water to grow various platforms that help you navigate and traverse through challenging levels.
+Created for the Global Game Jam 2023 with the theme "Roots," Plantaforma is a 2D platformer where water is a finite resource. Use it to grow platforms and traverse challenging levels.
