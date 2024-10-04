@@ -41,43 +41,32 @@ body {
     color: #d0d0d0;
 }
 
-/* Carousel container styles */
-.carousel-container {
-    position: relative;
-    width: 100%; /* Make the carousel take full width of its parent container */
-    overflow: hidden; /* Hide overflow of slides */
-    margin-bottom: 20px;
+/* Carousel Container - Flexbox ensures slides are side by side */
+.carousel {
+    display: flex;
+    flex-direction: row; /* Align items horizontally */
+    overflow: hidden; /* Hide the overflowed slides */
+    width: 100%; /* Ensure carousel takes up the full width */
 }
 
-/* Style for individual carousel slides (both images and videos) */
+/* Each slide will take up the full width of the carousel */
 .carousel-slide {
-    width: 100%; /* Set the slide width to 100% of the carousel */
-    height: auto; /* Automatically adjust height to maintain aspect ratio */
-    max-height: 600px; /* Optional: set a max height for the carousel */
-    object-fit: cover; /* Ensures the image covers the container while maintaining aspect ratio */
-    display: block; /* Make sure images are treated as block elements */
+    min-width: 100%; /* Each slide takes full width of the container */
+    transition: transform 0.5s ease-in-out; /* Smooth sliding animation */
+    flex-shrink: 0; /* Prevents shrinking when resizing */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Ensure videos also follow the same scaling behavior */
-.carousel-slide video {
-    width: 100%;
-    height: auto;
-    object-fit: cover; /* Make sure video fits the container */
-}
-
-
-/* Carousel buttons */
+/* Hide carousel buttons (arrows) by default */
 .carousel-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(139, 195, 74, 0.8); /* Semi-transparent green */
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    z-index: 1;
-    border-radius: 50%;
+    display: none;
+}
+
+/* Show carousel buttons (arrows) when there are multiple images */
+.carousel.has-multiple-images .carousel-button {
+    display: block;
 }
 
 #prev-button {
