@@ -1,8 +1,12 @@
+@font-face{
+    font-family:'FiraCode';
+    src: url(FiraCode-VariableFont_wght.ttf);
+}
 /* Reset some basic styles */
 body, h2, p {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'FiraCode', sans-serif;
 }
 
 /* Body styling */
@@ -35,6 +39,7 @@ body {
 
 /* Description styling */
 #game-description {
+    margin-top: 30px;
     font-size: 18px;
     line-height: 1.6;
     margin-bottom: 30px;
@@ -133,4 +138,13 @@ body {
 /* Back Button Specific Styles */
 .back-button {
     margin-bottom: 20px;
+}
+
+/* Carousel Slide Specific Styles */
+.carousel img {
+    display: block; /* Remove any inline-block spacing */
+    width: 100%; /* Ensure the image takes full width */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Cover the area without distortion */
+    border-radius: 8px; /* Optional: for rounded corners */
 }

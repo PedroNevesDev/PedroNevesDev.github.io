@@ -1,19 +1,72 @@
+@font-face{
+    font-family:'FiraCode';
+    src: url(FiraCode-VariableFont_wght.ttf);
+}
+/* Media Query for Mobile Devices */
+@media (max-width: 768px) {
+    .projects-container {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Center items horizontally */
+    }
+
+    .project-card {
+        width: 90%; /* Make cards take more width */
+        max-width: 90%; /* Ensure it doesn't exceed 90% */
+        margin: 10px 0; /* Add margin between cards */
+    }
+
+    .parallax-content h1 {
+        font-size: 2em; /* Reduce font size for headings on mobile */
+    }
+
+    .parallax-content p {
+        font-size: 1.2em; /* Adjust paragraph size for readability */
+    }
+
+    .about-me-text-container {
+        padding: 0 10px; /* Reduce padding on sides */
+    }
+
+    .showreel iframe {
+        width: 100vw; /* Make the iframe take the full width */
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    .section {
+        padding: 30px 10px; /* Adjust padding for sections */
+    }
+}
+
 /* General Styles */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'FiraCode', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #0A0A0A; /* Very dark background */
     color: #e0e0e0; /* Light text color */
     overflow-x: hidden; /* Prevent horizontal scroll */
 }
-a{
-    color: #32CD32;
+
+.projects-container {
+    overflow: hidden; /* Prevent overflow in the projects container */
 }
+
+/* Other styles... */
+
 /* Custom Scrollbar for WebKit Browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
     width: 12px;
 }
+
+/* The rest of your CSS code remains unchanged */
+
+
+
+a{
+    color: #32CD32;
+    text-decoration:none;
+}
+
 
 ::-webkit-scrollbar-track {
     background: #333; /* Dark background for the track */
@@ -85,7 +138,7 @@ header {
 }
 
 .parallax-content {
-    position: relative; /* Changed from absolute to relative */
+    position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -95,9 +148,31 @@ header {
     z-index: 1; /* Ensure it is above the parallax layers */
 }
 
+/* Align the h1 content using flexbox */
 .parallax-content h1 {
     font-size: 3em;
     margin: 0;
+    display: inline-flex; /* Flexbox for inline alignment */
+    align-items: center; /* Vertically align items */
+    justify-content: center; /* Horizontally align content */
+}
+
+/* Style for the brackets */
+.parallax-content .special {
+    font-size: 1.2em; /* Larger font size for the brackets */
+    color: rgb(255, 255, 255); /* White color for the brackets */
+    text-shadow: 0 0 30px rgb(255, 255, 255); /* White glow */
+}
+
+/* Optional: Adjust spacing for the left and right brackets */
+.parallax-content .left-bracket {
+    margin-right: 0.5em;
+
+}
+
+.parallax-content .right-bracket {
+    margin-left: 0.5em;
+
 }
 
 .parallax-content p {
@@ -177,7 +252,7 @@ header {
     justify-content: center; /* Center the items horizontally */
     gap: 20px; /* Space between project cards */
     margin-top: 20px;
-    max-width: 1200px; /* Limit the width of the container */
+    max-width: 1400px; /* Limit the width of the container */
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 30px; /* Space below icons */
@@ -185,39 +260,65 @@ header {
 
 /* Project card styling */
 .project-card {
-    background-color: #2d2d2d; /* Slightly lighter dark background */
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Darker shadow for depth */
+    background-color: #2d2d2d; /* Dark background */
+    border-radius: 0px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Shadow for depth */
     overflow: hidden;
     transition: transform 0.3s ease;
     width: 100%;
-    max-width: 350px; /* Ensure the card does not exceed 350px */
+    max-width: 400px; /* Ensure the card does not exceed 350px */
+    position: relative; /* For absolute positioning of description */
+    height: 290px; /* Set a fixed height for cards */
 }
 
-.project-card:hover {
-    transform: translateY(-10px);
+/* Project image */
+.project-image {
+    height: 70%; /* Height for the image section */
+    overflow: hidden; /* Hide overflow */
 }
 
-.project-card img {
+.project-image img {
     width: 100%;
-    height: auto;
+    height: auto; /* Maintain aspect ratio */
+    transition: transform 0.3s ease; /* Optional image scaling on hover */
 }
 
-.project-card .project-content {
-    padding: 15px;
+/* Title styling */
+.project-title {
+    padding: 10px;
+    background-color: rgba(27, 27, 27, 0.9); /* Match the card background */
+    color: #e0e0e0;
 }
 
-.project-card h3 {
-    margin: 0 0 10px;
-    font-size: 1.5em;
-    color: #e0e0e0; /* Light text color */
+/* Description hidden by default */
+.project-description {
+    position: absolute; /* Positioning to overlay */
+    bottom: 0; /* Align to the bottom of the card */
+    left: 0; /* Align to the left of the card */
+    right: 0; /* Align to the right of the card */
+    background-color: rgba(27, 27, 27, 0.9); /* Semi-transparent background */
+    max-height: 0; /* Initially hidden */
+    overflow: hidden; /* Hide overflow */
+    transition: max-height 0.5s ease; /* Smooth transition for expanding */
 }
 
-.project-card p {
-    margin: 0;
-    font-size: 1em;
+/* Show description on hover */
+.project-card:hover .project-description {
+    max-height: 250px; /* Allow description to expand */
+}
+
+/* Optional: Hover effect for the card */
+.project-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+}
+
+/* Project card text */
+.project-card-text {
+    text-align: justify;
+    padding: 10px; /* Padding around the text */
     color: #b0b0b0; /* Lighter text color */
 }
+
 
 /* Game Overview Section */
 .game-overview {
@@ -394,12 +495,3 @@ footer {
 .project-card-text{
     text-align:justify;
 }
-
-
-
-
-
-
-
-
-

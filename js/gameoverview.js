@@ -87,12 +87,13 @@ function addMediaToCarousel(mediaUrl, type) {
         mediaElement.className = 'carousel-slide';
     } else {
         mediaElement.src = mediaUrl;
-        mediaElement.className = 'carousel-slide';
+        mediaElement.className = 'carousel-slide'; // This class applies your CSS styles
         mediaElement.alt = 'Image slide';
     }
     
     carousel.appendChild(mediaElement);
 }
+
 
 function checkUnityBuild(projectPath) {
     fetch(`${projectPath}unitybuild/index.html`)

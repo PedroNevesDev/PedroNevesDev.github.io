@@ -84,16 +84,20 @@ projects.forEach(project => {
     ]).then(([title, description, imageBlob]) => {
         const imageUrl = URL.createObjectURL(imageBlob);
 
-        // Create the project card
-        const projectCard = document.createElement('div');
+        // Create the project card as a clickable link
+        const projectCard = document.createElement('a');
         projectCard.className = 'project-card';
+        projectCard.href = `gameoverview.html?project=${project}`; // Make the whole card clickable
 
         projectCard.innerHTML = `
-            <img src="${imageUrl}" alt="${title}">
-            <div class="project-content">
+            <div class="project-image">
+                <img src="${imageUrl}" alt="${title}">
+            </div>
+            <div class="project-title">
                 <h3>${title}</h3>
-                <p class="project-card-text">${description}</p></br>
-                <a href="gameoverview.html?project=${project}" class="view-overview-link">Game Overview</a>
+            </div>
+            <div class="project-description">
+                <p class="project-card-text">${description}</p>
             </div>
         `;
 
@@ -103,6 +107,8 @@ projects.forEach(project => {
         console.error('Error loading project data:', error);
     });
 });
+
+
 
 
 
