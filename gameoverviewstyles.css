@@ -1,5 +1,5 @@
-@font-face{
-    font-family:'FiraCode';
+@font-face {
+    font-family: 'FiraCode';
     src: url(FiraCode-VariableFont_wght.ttf);
 }
 /* Reset some basic styles */
@@ -148,6 +148,7 @@ body {
     object-fit: cover; /* Cover the area without distortion */
     border-radius: 8px; /* Optional: for rounded corners */
 }
+
 /* Devlogs Section */
 .devlogs-section {
     padding: 40px 20px;
@@ -190,17 +191,12 @@ body {
 
 /* Collapsible Content Styles */
 .content {
-    padding: 10px 15px;
-    display: none;
-    background-color: #1e1e1e;
-    color: #f0f0f0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
+    display: none; /* Ensure collapsible content is hidden by default */
+}
+.content.show {
+    display: block; /* Show when active */
 }
 
-.content.show {
-    display: block;
-}
 /* Preformatted text inside the collapsible devlog */
 .content pre {
     white-space: pre-wrap; /* Ensures long lines wrap instead of overflowing */
@@ -209,3 +205,9 @@ body {
     color: #f0f0f0; /* Text color */
     background-color: transparent; /* Matches background */
 }
+.devlogs-section h2 {
+    font-size: 24px; /* Adjust as needed */
+    color: #8bc34a;  /* Ensure this color contrasts with the background */
+    margin-bottom: 20px; /* Space below the title */
+}
+

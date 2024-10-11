@@ -1,6 +1,4 @@
-// JavaScript for game overview page
 document.addEventListener('DOMContentLoaded', function () {
-    // Get the project name from the URL parameters
     const params = new URLSearchParams(window.location.search);
     const project = params.get('project');
 
@@ -9,11 +7,10 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
-    // Base path for the project folder
     const projectPath = `projects/${project}/gameoverview/`;
 
-    // Load game overview data
     loadGameOverview(projectPath);
+    loadDevLogs(projectPath);  // Load devlogs after the game overview
 });
 
 function displayError(message) {
@@ -22,7 +19,6 @@ function displayError(message) {
 }
 
 function loadGameOverview(projectPath) {
-    // Fetch title and description from the project folder
     Promise.all([
         fetch(`${projectPath}title.txt`).then(response => response.ok ? response.text() : 'Unknown Title'),
         fetch(`${projectPath}description.txt`).then(response => response.ok ? response.text() : 'No description available.')
@@ -31,10 +27,7 @@ function loadGameOverview(projectPath) {
         document.getElementById('game-title').textContent = title;
         document.getElementById('game-description').textContent = description;
 
-        // Load carousel images and videos
         loadCarousel(projectPath);
-
-        // Check if the Unity build exists and setup Unity build button
         checkUnityBuild(projectPath);
     })
     .catch(error => {
@@ -47,24 +40,19 @@ function loadCarousel(projectPath) {
     const carouselContainer = document.getElementById('carousel');
     const mediaExtensions = ['jpg', 'jpeg', 'png', 'mp4', 'webm', 'ogg'];
 
-    // Fetch the list of media files dynamically from the folder
     fetch(`${projectPath}carousel/files.json`)
         .then(response => response.json())
         .then(files => {
-            // Filter out valid media files
             const validFiles = files.filter(file => {
                 const fileExtension = file.split('.').pop().toLowerCase();
                 return mediaExtensions.includes(fileExtension);
             });
 
-            // Add media files to the carousel
             validFiles.forEach(file => {
-                const fileExtension = file.split('.').pop().toLowerCase();
-                const mediaType = fileExtension.startsWith('mp') ? 'video' : 'image';
+                const mediaType = file.endsWith('mp4') || file.endsWith('webm') ? 'video' : 'image';
                 addMediaToCarousel(`${projectPath}carousel/${file}`, mediaType);
             });
 
-            // Hide navigation buttons if only one file exists
             if (validFiles.length <= 1) {
                 document.getElementById('prev-button').style.display = 'none';
                 document.getElementById('next-button').style.display = 'none';
@@ -76,24 +64,21 @@ function loadCarousel(projectPath) {
         });
 }
 
-
 function addMediaToCarousel(mediaUrl, type) {
     const carousel = document.getElementById('carousel');
     const mediaElement = document.createElement(type === 'video' ? 'video' : 'img');
 
     if (type === 'video') {
         mediaElement.src = mediaUrl;
-        mediaElement.controls = true; // Add controls for video
-        mediaElement.className = 'carousel-slide';
+        mediaElement.controls = true;
     } else {
         mediaElement.src = mediaUrl;
-        mediaElement.className = 'carousel-slide'; // This class applies your CSS styles
         mediaElement.alt = 'Image slide';
     }
-    
+
+    mediaElement.className = 'carousel-slide';
     carousel.appendChild(mediaElement);
 }
-
 
 function checkUnityBuild(projectPath) {
     fetch(`${projectPath}unitybuild/index.html`)
@@ -101,11 +86,11 @@ function checkUnityBuild(projectPath) {
             if (response.ok) {
                 setupUnityBuild(projectPath);
             } else {
-                document.getElementById('play-button').style.display = 'none'; // Hide the play button if Unity build does not exist
+                document.getElementById('play-button').style.display = 'none';
             }
         })
         .catch(() => {
-            document.getElementById('play-button').style.display = 'none'; // Hide the play button on error
+            document.getElementById('play-button').style.display = 'none';
         });
 }
 
@@ -119,87 +104,60 @@ function setupUnityBuild(projectPath) {
         playButton.style.display = 'none';
     });
 }
-document.addEventListener('DOMContentLoaded', function () {
-    // Existing logic for game overview...
 
-    // After other loading functions, load devlogs if available
-    loadDevlogs();
-});
+function loadDevLogs(projectPath) {
+    const devlogsContainer = document.getElementById('devlogs-section');
+    devlogsContainer.style.display = 'block'; // Make sure to show the section
 
-function loadDevlogs() {
-    const project = new URLSearchParams(window.location.search).get('project');
-    const devlogsPath = `projects/${project}/devlogs/`;
-
-    // Check if the devlogs folder exists
-    fetch(devlogsPath)
+    fetch(`${projectPath}devlogs/`)
         .then(response => {
             if (response.ok) {
-                // Folder exists, now load devlog text files
-                fetchDevlogFiles(devlogsPath);
+                return response.text();
+            } else {
+                throw new Error('No devlogs folder found');
             }
         })
-        .catch(error => {
-            console.log('Devlogs folder not found or inaccessible.');
-        });
-}
-
-function fetchDevlogFiles(devlogsPath) {
-    // Fetch the file list from the devlogs folder
-    fetch(`${devlogsPath}files.json`)
-        .then(response => response.json())
-        .then(files => {
-            if (files.length > 0) {
-                document.getElementById('devlogs-section').style.display = 'block'; // Show devlogs section
+        .then(text => {
+            const files = text.match(/<a href="([^"]+\.txt)">/g);
+            if (files) {
                 files.forEach(file => {
-                    if (file.endsWith('.txt')) {
-                        createCollapsibleDevlog(devlogsPath, file);
-                    }
+                    const filename = file.match(/<a href="([^"]+)">/)[1];
+                    createCollapsibleDevlog(filename, projectPath);
                 });
+            } else {
+                devlogsContainer.style.display = 'none'; // Hide if no files found
             }
         })
         .catch(error => {
-            console.error('Failed to load devlog files:', error);
+            console.error('Failed to load devlogs:', error);
+            devlogsContainer.style.display = 'none'; // Hide if folder doesn't exist
         });
 }
 
-function createCollapsibleDevlog(devlogsPath, filename) {
-    const devlogsContainer = document.getElementById('devlogs-container');
-    const formattedTitle = filename.replace(/_/g, ' ').replace('.txt', ''); // Replace underscores and remove '.txt'
 
-    // Create the collapsible button
-    const collapsibleButton = document.createElement('button');
-    collapsibleButton.className = 'collapsible';
-    collapsibleButton.textContent = formattedTitle;
 
-    // Create the collapsible content container
-    const contentDiv = document.createElement('div');
-    contentDiv.className = 'content';
+function createCollapsibleDevlog(filename, projectPath) {
+    const devlogsContainer = document.getElementById('devlogs-container'); // Change here
+    const collapsible = document.createElement('button');
+    collapsible.textContent = filename.replace(/_/g, ' '); // Replace underscores with spaces
+    collapsible.classList.add('collapsible');
+    devlogsContainer.appendChild(collapsible); // Append to devlogs-container
 
-    // Fetch the content of the devlog file
-    fetch(`${devlogsPath}${filename}`)
+    const content = document.createElement('div');
+    content.classList.add('content');
+
+    fetch(`${projectPath}devlogs/${filename}`)
         .then(response => response.text())
-        .then(content => {
-            const preElement = document.createElement('pre'); // Create a <pre> element
-            preElement.textContent = content; // Set the fetched content inside the <pre>
-            contentDiv.appendChild(preElement); // Append <pre> to contentDiv
-        })
-        .catch(error => {
-            contentDiv.textContent = 'Failed to load this devlog.';
+        .then(text => {
+            content.innerHTML = text.replace(/\n/g, '<br>'); // Convert newlines to <br>
         });
 
-    // Append the button and content to the devlogs container
-    devlogsContainer.appendChild(collapsibleButton);
-    devlogsContainer.appendChild(contentDiv);
-
-    // Event listener to toggle collapsible content
-    collapsibleButton.addEventListener('click', function () {
+    collapsible.addEventListener('click', function () {
         this.classList.toggle('active');
-        contentDiv.classList.toggle('show');
+        content.style.display = content.style.display === 'block' ? 'none' : 'block';
     });
+
+    devlogsContainer.appendChild(content); // Append to devlogs-container
 }
-
-
-
-
 
 
