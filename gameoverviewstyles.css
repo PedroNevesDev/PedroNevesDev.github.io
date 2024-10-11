@@ -148,3 +148,64 @@ body {
     object-fit: cover; /* Cover the area without distortion */
     border-radius: 8px; /* Optional: for rounded corners */
 }
+/* Devlogs Section */
+.devlogs-section {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#devlogs-container {
+    margin-top: 20px;
+}
+
+/* Collapsible Button Styles */
+.collapsible {
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.collapsible:hover {
+    background-color: #555;
+}
+
+.collapsible:after {
+    content: '\002B'; /* Unicode plus symbol */
+    color: white;
+    float: right;
+    margin-left: 10px;
+}
+
+.collapsible.active:after {
+    content: "\2212"; /* Unicode minus symbol */
+}
+
+/* Collapsible Content Styles */
+.content {
+    padding: 10px 15px;
+    display: none;
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.content.show {
+    display: block;
+}
+/* Preformatted text inside the collapsible devlog */
+.content pre {
+    white-space: pre-wrap; /* Ensures long lines wrap instead of overflowing */
+    word-wrap: break-word; /* Breaks long words if necessary */
+    font-family: inherit;  /* Keeps the same font style as the rest of the content */
+    color: #f0f0f0; /* Text color */
+    background-color: transparent; /* Matches background */
+}

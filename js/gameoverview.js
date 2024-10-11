@@ -119,6 +119,86 @@ function setupUnityBuild(projectPath) {
         playButton.style.display = 'none';
     });
 }
+document.addEventListener('DOMContentLoaded', function () {
+    // Existing logic for game overview...
+
+    // After other loading functions, load devlogs if available
+    loadDevlogs();
+});
+
+function loadDevlogs() {
+    const project = new URLSearchParams(window.location.search).get('project');
+    const devlogsPath = `projects/${project}/devlogs/`;
+
+    // Check if the devlogs folder exists
+    fetch(devlogsPath)
+        .then(response => {
+            if (response.ok) {
+                // Folder exists, now load devlog text files
+                fetchDevlogFiles(devlogsPath);
+            }
+        })
+        .catch(error => {
+            console.log('Devlogs folder not found or inaccessible.');
+        });
+}
+
+function fetchDevlogFiles(devlogsPath) {
+    // Fetch the file list from the devlogs folder
+    fetch(`${devlogsPath}files.json`)
+        .then(response => response.json())
+        .then(files => {
+            if (files.length > 0) {
+                document.getElementById('devlogs-section').style.display = 'block'; // Show devlogs section
+                files.forEach(file => {
+                    if (file.endsWith('.txt')) {
+                        createCollapsibleDevlog(devlogsPath, file);
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Failed to load devlog files:', error);
+        });
+}
+
+function createCollapsibleDevlog(devlogsPath, filename) {
+    const devlogsContainer = document.getElementById('devlogs-container');
+    const formattedTitle = filename.replace(/_/g, ' ').replace('.txt', ''); // Replace underscores and remove '.txt'
+
+    // Create the collapsible button
+    const collapsibleButton = document.createElement('button');
+    collapsibleButton.className = 'collapsible';
+    collapsibleButton.textContent = formattedTitle;
+
+    // Create the collapsible content container
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'content';
+
+    // Fetch the content of the devlog file
+    fetch(`${devlogsPath}${filename}`)
+        .then(response => response.text())
+        .then(content => {
+            const preElement = document.createElement('pre'); // Create a <pre> element
+            preElement.textContent = content; // Set the fetched content inside the <pre>
+            contentDiv.appendChild(preElement); // Append <pre> to contentDiv
+        })
+        .catch(error => {
+            contentDiv.textContent = 'Failed to load this devlog.';
+        });
+
+    // Append the button and content to the devlogs container
+    devlogsContainer.appendChild(collapsibleButton);
+    devlogsContainer.appendChild(contentDiv);
+
+    // Event listener to toggle collapsible content
+    collapsibleButton.addEventListener('click', function () {
+        this.classList.toggle('active');
+        contentDiv.classList.toggle('show');
+    });
+}
+
+
 
 
 
