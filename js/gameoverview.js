@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const projectPath = `projects/${project}/gameoverview/`;
 
     loadGameOverview(projectPath);
-    loadDevLogs(projectPath);  // Load devlogs after the game overview
+    loadDevLogs(projectPath); // Load devlogs after the game overview
 });
 
 function displayError(message) {
@@ -60,7 +60,7 @@ function loadCarousel(projectPath) {
         })
         .catch(error => {
             console.error('Failed to load carousel media files:', error);
-            displayError('Failed to load carousel media.');
+            displayError('Failed to load carousel.');
         });
 }
 
@@ -106,47 +106,87 @@ function setupUnityBuild(projectPath) {
 }
 
 function loadDevLogs(projectPath) {
-    const devlogsContainer = document.getElementById('devlogs-section');
-    devlogsContainer.style.display = 'block'; // Make sure to show the section
+    const devlogsSection = document.getElementById('devlogs-section');
+    const devlogsContainer = document.getElementById('devlogs-container');
 
-    fetch(`${projectPath}devlogs/${filename}`)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-        return response.text();
-    })
-    .then(text => {
-        content.innerHTML = text.replace(/\n/g, '<br>'); // Preserve line breaks
-    })
-    .catch(error => console.error('Fetch error:', error));
+    fetch(`${projectPath}devlogs.json`) // Change this to your correct path
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json(); // Parse the JSON response
+        })
+        .then(data => {
+            console.log('Devlogs data:', data); // Log the received data
+            const devlogs = data.devlogs; // Access the array of devlog filenames
 
+            if (devlogs.length === 0) {
+                devlogsContainer.innerHTML = 'No devlogs available.';
+                devlogsSection.style.display = 'block'; // Show section even if empty
+            } else {
+                devlogs.forEach(filename => {
+                    createCollapsibleDevlog(filename, projectPath);
+                });
+                devlogsSection.style.display = 'block'; // Show the section if there are devlogs
+            }
+        })
+        .catch(error => {
+            console.error('Failed to load devlogs:', error);
+            const devlogsContainer = document.getElementById('devlogs-container');
+            devlogsContainer.innerHTML = 'Failed to load devlogs.';
+            devlogsSection.style.display = 'block'; // Show section even if error occurred
+        });
 }
-
-
 
 function createCollapsibleDevlog(filename, projectPath) {
-    const devlogsContainer = document.getElementById('devlogs-container'); // Change here
-    const collapsible = document.createElement('button');
-    collapsible.textContent = filename.replace(/_/g, ' '); // Replace underscores with spaces
-    collapsible.classList.add('collapsible');
-    devlogsContainer.appendChild(collapsible); // Append to devlogs-container
+    const devlogsContainer = document.getElementById('devlogs-container');
+    
+    // Create the collapsible section
+    const collapsibleDiv = document.createElement('div');
+    collapsibleDiv.className = 'collapsible';
+    
+    // Create the title for the collapsible
+    const title = document.createElement('button');
+    title.className = 'collapsible-title';
+    title.innerText = filename.replace('.txt', ''); // Display without .txt
 
+    // Create the content area for the devlog
     const content = document.createElement('div');
-    content.classList.add('content');
+    content.className = 'collapsible-content'; // Ensure this matches the style
+    content.style.display = 'none'; // Hidden by default
 
+    console.log(`Fetching content for: ${filename}`); // Debug log
+
+    // Fetch the content of the devlog file
     fetch(`${projectPath}devlogs/${filename}`)
-        .then(response => response.text())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error fetching ${filename}: ${response.status}`);
+            }
+            return response.text(); // Get the text content
+        })
         .then(text => {
-            content.innerHTML = text.replace(/\n/g, '<br>'); // Convert newlines to <br>
+            content.innerText = text; // Insert text content into collapsible
+            collapsibleDiv.appendChild(title);
+            collapsibleDiv.appendChild(content);
+            devlogsContainer.appendChild(collapsibleDiv); // Append to the container
+        })
+        .catch(error => {
+            console.error('Failed to load devlog content:', error);
+            content.innerText = 'Failed to load content.';
+            collapsibleDiv.appendChild(title);
+            collapsibleDiv.appendChild(content);
+            devlogsContainer.appendChild(collapsibleDiv); // Append to the container even on error
         });
 
-    collapsible.addEventListener('click', function () {
+    // Toggle the collapsible content
+    title.addEventListener('click', function () {
         this.classList.toggle('active');
-        content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        if (content.style.display === 'block') {
+            content.style.display = 'none';
+        } else {
+            content.style.display = 'block';
+        }
     });
-
-    devlogsContainer.appendChild(content); // Append to devlogs-container
 }
-
 

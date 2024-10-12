@@ -162,49 +162,61 @@ body {
 
 /* Collapsible Button Styles */
 .collapsible {
-    background-color: #333;
+    background-color: #333; /* Dark background for the button */
     color: white;
     cursor: pointer;
-    padding: 10px;
-    width: 100%;
+    width: 100%; /* Ensure it takes the full width */
     border: none;
     text-align: left;
     outline: none;
     font-size: 18px;
     transition: background-color 0.3s ease;
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 5px; /* Space between collapsibles */
 }
 
-.collapsible:hover {
-    background-color: #555;
+/* Title Button */
+.collapsible-title {
+    background: none; /* Remove default button background */
+    border: none; /* Remove border */
+    color: inherit; /* Use inherited text color */
+    font-size: 18px; /* Keep same font size */
+    width: 100%; /* Ensure it takes the full width */
+    text-align: left; /* Align text to left */
+    padding: 10px; /* Add padding for a better clickable area */
+    cursor: pointer; /* Pointer cursor for interaction */
 }
 
-.collapsible:after {
-    content: '\002B'; /* Unicode plus symbol */
-    color: white;
-    float: right;
-    margin-left: 10px;
+/* Title Button hover effect */
+.collapsible-title:hover {
+    background-color: #555; /* Darker on hover */
 }
 
-.collapsible.active:after {
-    content: "\2212"; /* Unicode minus symbol */
-}
-
-/* Collapsible Content Styles */
-.content {
+/* Collapsible content styles */
+.collapsible-content {
     display: none; /* Ensure collapsible content is hidden by default */
+    padding: 10px; /* Add padding around the content */
+    background-color: #222; /* Darker background for the content */
+    border-left: 3px solid #8bc34a; /* Green left border for emphasis */
+    border-radius: 0 0 5px 5px; /* Rounded corners at the bottom */
 }
-.content.show {
-    display: block; /* Show when active */
+
+
+/* Collapsible active state */
+.collapsible.active .collapsible-title {
+    background-color: #555; /* Darker when active */
 }
 
 /* Preformatted text inside the collapsible devlog */
-.content pre {
+.collapsible-content pre {
     white-space: pre-wrap; /* Ensures long lines wrap instead of overflowing */
     word-wrap: break-word; /* Breaks long words if necessary */
-    font-family: inherit;  /* Keeps the same font style as the rest of the content */
+    font-family: inherit; /* Keeps the same font style as the rest of the content */
     color: #f0f0f0; /* Text color */
     background-color: transparent; /* Matches background */
 }
+
+
 .devlogs-section h2 {
     font-size: 24px; /* Adjust as needed */
     color: #8bc34a;  /* Ensure this color contrasts with the background */
