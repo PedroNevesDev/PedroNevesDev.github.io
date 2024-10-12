@@ -109,29 +109,18 @@ function loadDevLogs(projectPath) {
     const devlogsContainer = document.getElementById('devlogs-section');
     devlogsContainer.style.display = 'block'; // Make sure to show the section
 
-    fetch(`${projectPath}devlogs/`)
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                throw new Error('No devlogs folder found');
-            }
-        })
-        .then(text => {
-            const files = text.match(/<a href="([^"]+\.txt)">/g);
-            if (files) {
-                files.forEach(file => {
-                    const filename = file.match(/<a href="([^"]+)">/)[1];
-                    createCollapsibleDevlog(filename, projectPath);
-                });
-            } else {
-                devlogsContainer.style.display = 'none'; // Hide if no files found
-            }
-        })
-        .catch(error => {
-            console.error('Failed to load devlogs:', error);
-            devlogsContainer.style.display = 'none'; // Hide if folder doesn't exist
-        });
+    fetch(`${projectPath}devlogs/${filename}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        return response.text();
+    })
+    .then(text => {
+        content.innerHTML = text.replace(/\n/g, '<br>'); // Preserve line breaks
+    })
+    .catch(error => console.error('Fetch error:', error));
+
 }
 
 
