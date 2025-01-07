@@ -1,1 +1,0 @@
-Lou is an innovative 3D puzzle game where you control and rotate the puzzle itself to guide balls through obstacles, ensuring they reach their designated goals. With its challenging mechanics and mind-bending design, Lou offers a fresh puzzle-solving experience. This was my first project built using Unreal Engine 4.
