@@ -62,7 +62,6 @@ const projectsContainer = document.getElementById('projects-container');
 
 // List of project folders (add more project folders here as needed)
 const projects = [
-    'SOL',
     'PerfectClue',
     'Lou',
     'Plantaforma',
