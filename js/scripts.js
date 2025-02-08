@@ -62,6 +62,7 @@ const projectsContainer = document.getElementById('projects-container');
 
 // List of project folders (add more project folders here as needed)
 const projects = [
+    'Heisties',
     'PerfectClue',
     'Lou',
     'Plantaforma',
