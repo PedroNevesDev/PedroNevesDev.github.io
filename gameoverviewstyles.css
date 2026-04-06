@@ -1,225 +1,248 @@
-@font-face {
-    font-family: 'FiraCode';
-    src: url(FiraCode-VariableFont_wght.ttf);
-}
-/* Reset some basic styles */
-body, h2, p {
-    margin: 0;
-    padding: 0;
-    font-family: 'FiraCode', sans-serif;
+/* Game overview — matches portfolio (styles.css loads first for :root + base) */
+
+.page-game-overview {
+    min-height: 100vh;
 }
 
-/* Body styling */
-body {
-    background-color: #0A0A0A; /* Dark background */
-    color: #f0f0f0; /* Light text */
-    font-size: 16px;
+.go-overview {
+    position: fixed;
+    top: 1.25rem;
+    left: 1.25rem;
+    z-index: 30;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+    backdrop-filter: blur(10px);
+    border-radius: 2px;
+    transition: border-color 0.2s, background 0.2s;
+}
+.go-overview:hover {
+    border-color: var(--accent-soft);
+    text-decoration: none;
 }
 
-/* Game overview section */
-.game-overview-section {
-    padding: 40px 20px;
-    max-width: 1200px;
+.overview-main {
+    position: relative;
+    z-index: 2;
+    max-width: 960px;
     margin: 0 auto;
+    padding: 5.5rem 1.5rem 3rem;
 }
 
-.overview-container {
-    background-color: #1e1e1e; /* Darker container */
+.overview-hero {
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+}
+.overview-kicker {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+.overview-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 6vw, 3.25rem);
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.1;
+    color: var(--text);
+}
+
+.overview-panel {
+    border: 1px solid rgba(255, 102, 51, 0.2);
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(12px);
     border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    box-shadow: 0 16px 48px rgba(255, 102, 51, 0.08);
 }
 
-/* Title styling */
-#game-title {
-    font-size: 32px;
-    margin-bottom: 20px;
-    color: #8bc34a; /* Green from section titles */
+/* Carousel */
+.go-carousel-wrap {
+    position: relative;
+    background: linear-gradient(180deg, #f0ebe8 0%, #e8e2dc 100%);
+    border-bottom: 1px solid var(--border);
 }
-
-/* Description styling */
-#game-description {
-    margin-top: 30px;
-    font-size: 18px;
-    line-height: 1.6;
-    margin-bottom: 30px;
-    color: #d0d0d0;
+.go-carousel-viewport {
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 70vh;
 }
-
-/* Carousel Container - Flexbox ensures slides are side by side */
-.carousel {
+.go-carousel {
     display: flex;
-    flex-direction: row; /* Align items horizontally */
-    overflow: hidden; /* Hide the overflowed slides */
-    width: 100%; /* Ensure carousel takes up the full width */
+    height: 100%;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
 }
-
-/* Each slide will take up the full width of the carousel */
-.carousel-slide {
-    min-width: 100%; /* Each slide takes full width of the container */
-    transition: transform 0.5s ease-in-out; /* Smooth sliding animation */
-    flex-shrink: 0; /* Prevents shrinking when resizing */
+.go-carousel-slide {
+    flex-shrink: 0;
+    height: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at center, #faf7f4 0%, #ebe4de 70%);
 }
-
-/* Hide carousel buttons (arrows) by default */
-.carousel-button {
-    display: none;
-}
-
-/* Show carousel buttons (arrows) when there are multiple images */
-.carousel.has-multiple-images .carousel-button {
+.go-carousel-slide img,
+.go-carousel-slide video {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
     display: block;
 }
 
-#prev-button {
-    left: 10px;
-}
-
-#next-button {
-    right: 10px;
-}
-
-/* Unity container */
-#unity-container {
-    margin-top: 30px;
-    text-align: center;
-}
-
-.play-button {
-    background-color: #8bc34a; /* Green */
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    font-size: 18px;
+.go-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 102, 51, 0.35);
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--accent-hot);
+    font-size: 1.5rem;
+    line-height: 1;
     cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, background 0.2s;
 }
-
-.play-button:hover {
-    background-color: #6a9e1b; /* Darker green */
+.go-carousel-btn:hover {
+    border-color: var(--accent-soft);
 }
-
-#unity-iframe {
+.go-carousel-btn--prev {
+    left: 0.75rem;
+}
+.go-carousel-btn--next {
+    right: 0.75rem;
+}
+.go-carousel-wrap.is-single .go-carousel-btn {
     display: none;
+}
+
+.overview-body {
+    padding: 2rem 1.75rem 2.25rem;
+}
+.overview-description {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--text-muted);
+    margin: 0 0 1.5rem;
+    white-space: pre-wrap;
+}
+
+.overview-subtitle {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0 0 1rem;
+}
+.overview-links-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--text-muted);
+}
+.overview-links-list a {
+    color: var(--accent);
+}
+
+.unity-block {
+    margin-top: 1.75rem;
+}
+.go-play-btn {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.9rem 1.75rem;
+    border: 1px solid var(--accent-soft);
+    background: linear-gradient(135deg, rgba(255, 102, 51, 0.15) 0%, rgba(255, 51, 51, 0.1) 100%);
+    color: var(--accent-hot);
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.go-play-btn:hover {
+    background: linear-gradient(135deg, rgba(255, 102, 51, 0.25) 0%, rgba(255, 51, 51, 0.15) 100%);
+    box-shadow: 0 6px 24px rgba(255, 102, 51, 0.2);
+}
+.unity-iframe {
     width: 100%;
-    height: 600px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    min-height: 520px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-top: 1rem;
+    background: #1a1816;
 }
 
-/* General Button Styles */
-.play-button, .back-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #8bc34a; /* Green */
-    color: #1b1b1b; /* Dark text color */
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 1.1em;
-    text-align: center;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.overview-devlogs {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+.devlogs-container {
+    margin-top: 1rem;
 }
 
-.play-button:hover, .back-button:hover {
-    background-color: #6a9e1b; /* Darker green */
-}
-
-/* Play Button Specific Styles */
-.play-button {
-    margin: 20px auto;
-}
-
-/* Back Button Specific Styles */
-.back-button {
-    margin-bottom: 20px;
-}
-
-/* Carousel Slide Specific Styles */
-.carousel img {
-    display: block; /* Remove any inline-block spacing */
-    width: 100%; /* Ensure the image takes full width */
-    height: auto; /* Maintain aspect ratio */
-    object-fit: cover; /* Cover the area without distortion */
-    border-radius: 8px; /* Optional: for rounded corners */
-}
-
-/* Devlogs Section */
-.devlogs-section {
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-#devlogs-container {
-    margin-top: 20px;
-}
-
-/* Collapsible Button Styles */
 .collapsible {
-    background-color: #333; /* Dark background for the button */
-    color: white;
-    cursor: pointer;
-    width: 100%; /* Ensure it takes the full width */
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 18px;
-    transition: background-color 0.3s ease;
-    border-radius: 5px; /* Rounded corners */
-    margin-bottom: 5px; /* Space between collapsibles */
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
 }
-
-/* Title Button */
 .collapsible-title {
-    background: none; /* Remove default button background */
-    border: none; /* Remove border */
-    color: inherit; /* Use inherited text color */
-    font-size: 18px; /* Keep same font size */
-    width: 100%; /* Ensure it takes the full width */
-    text-align: left; /* Align text to left */
-    padding: 10px; /* Add padding for a better clickable area */
-    cursor: pointer; /* Pointer cursor for interaction */
+    width: 100%;
+    text-align: left;
+    padding: 0.85rem 1rem;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--text);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
 }
-
-/* Title Button hover effect */
 .collapsible-title:hover {
-    background-color: #555; /* Darker on hover */
+    background: rgba(255, 255, 255, 0.05);
 }
-
-/* Collapsible content styles */
 .collapsible-content {
-    display: none; /* Ensure collapsible content is hidden by default */
-    padding: 10px; /* Add padding around the content */
-    background-color: #222; /* Darker background for the content */
-    border-left: 3px solid #8bc34a; /* Green left border for emphasis */
-    border-radius: 0 0 5px 5px; /* Rounded corners at the bottom */
+    padding: 1rem 1rem 1.25rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    line-height: 1.6;
+    white-space: pre-wrap;
+    font-size: 0.95rem;
 }
 
-
-/* Collapsible active state */
-.collapsible.active .collapsible-title {
-    background-color: #555; /* Darker when active */
+.site-footer--compact {
+    padding: 2rem 1rem;
+    margin-top: 2rem;
 }
 
-/* Preformatted text inside the collapsible devlog */
-.collapsible-content pre {
-    white-space: pre-wrap; /* Ensures long lines wrap instead of overflowing */
-    word-wrap: break-word; /* Breaks long words if necessary */
-    font-family: inherit; /* Keeps the same font style as the rest of the content */
-    color: #f0f0f0; /* Text color */
-    background-color: transparent; /* Matches background */
+@media (max-width: 600px) {
+    .go-overview {
+        left: 0.75rem;
+        top: 0.75rem;
+        font-size: 0.7rem;
+        padding: 0.5rem 0.75rem;
+    }
+    .go-carousel-viewport {
+        aspect-ratio: 4 / 3;
+    }
 }
-
-
-.devlogs-section h2 {
-    font-size: 24px; /* Adjust as needed */
-    color: #8bc34a;  /* Ensure this color contrasts with the background */
-    margin-bottom: 20px; /* Space below the title */
-}
-

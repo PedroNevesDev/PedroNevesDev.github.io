@@ -19,31 +19,32 @@
     });
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x080808, 0.035);
+    scene.fog = new THREE.FogExp2(0xf5f0eb, 0.028);
 
     const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 120);
-    camera.position.set(0, 0, 14);
+    /* Closer camera = larger silhouettes on screen */
+    camera.position.set(0, 0, 10.5);
 
     const group = new THREE.Group();
     scene.add(group);
 
     const wireMat = new THREE.MeshBasicMaterial({
-        color: 0x7a9e4a,
+        color: 0xff6633,
         wireframe: true,
         transparent: true,
-        opacity: 0.22,
+        opacity: 0.2,
     });
 
-    const geoA = new THREE.IcosahedronGeometry(2.2, 1);
-    const geoB = new THREE.TorusKnotGeometry(1.4, 0.38, 80, 12);
+    const geoA = new THREE.IcosahedronGeometry(3.4, 1);
+    const geoB = new THREE.TorusKnotGeometry(2.15, 0.58, 80, 12);
     const meshA = new THREE.Mesh(geoA, wireMat);
-    meshA.position.set(-5, 1.5, -2);
+    meshA.position.set(-5.5, 1.8, -2);
     const meshB = new THREE.Mesh(geoB, wireMat.clone());
     meshB.material.opacity = 0.18;
-    meshB.position.set(6, -1, -4);
-    const meshC = new THREE.Mesh(new THREE.OctahedronGeometry(1.6, 0), wireMat.clone());
+    meshB.position.set(6.5, -1.2, -4);
+    const meshC = new THREE.Mesh(new THREE.OctahedronGeometry(2.5, 0), wireMat.clone());
     meshC.material.opacity = 0.15;
-    meshC.position.set(0, -3, 2);
+    meshC.position.set(0, -3.2, 2);
     group.add(meshA, meshB, meshC);
 
     const particleCount = 420;
@@ -56,15 +57,28 @@
     const pGeo = new THREE.BufferGeometry();
     pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const pMat = new THREE.PointsMaterial({
-        color: 0xa8c97a,
-        size: 0.06,
+        color: 0xff8866,
+        size: 0.085,
         transparent: true,
-        opacity: 0.45,
+        opacity: 0.38,
         sizeAttenuation: true,
         depthWrite: false,
     });
     const particles = new THREE.Points(pGeo, pMat);
     scene.add(particles);
+
+    function isDarkTheme() {
+        return document.body && document.body.classList.contains('theme-dark');
+    }
+
+    function applyAmbientTheme() {
+        const dark = isDarkTheme();
+        scene.fog.color.setHex(dark ? 0x0d1814 : 0xf5f0eb);
+        wireMat.color.setHex(dark ? 0x5ecf9a : 0xff6633);
+        meshB.material.color.copy(wireMat.color);
+        meshC.material.color.copy(wireMat.color);
+        pMat.color.setHex(dark ? 0x8ef0c4 : 0xff8866);
+    }
 
     let width = window.innerWidth;
     let height = window.innerHeight;
@@ -81,6 +95,8 @@
 
     resize();
     window.addEventListener('resize', resize);
+    window.addEventListener('portfolio-themechange', applyAmbientTheme);
+    applyAmbientTheme();
 
     let mouseX = 0;
     let mouseY = 0;
