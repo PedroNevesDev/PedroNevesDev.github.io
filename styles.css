@@ -902,6 +902,15 @@ a:hover {
     line-height: 1.6;
     margin: 0 0 2rem;
 }
+.scene-lead a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-soft);
+    text-underline-offset: 2px;
+}
+.scene-lead a:hover {
+    text-decoration-color: var(--accent);
+}
 
 .about-me-text-container {
     text-align: left;
