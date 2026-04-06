@@ -3,121 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Development Portfolio</title>
+    <title>Pedro Neves — Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Add styles for footer and social icons */
-        footer {
-            background-color: #1b1b1b; /* Dark background */
-            color: white; /* White text */
-            text-align: center;
-            padding: 20px;
-            position: relative; /* To position footer correctly */
-            bottom: 0; /* Align footer at the bottom */
-            width: 100%; /* Full width */
-        }
-
-        .footer-container {
-            margin-bottom: 10px; /* Space below icons */
-        }
-
-        .social-icon {
-            width: 24px; /* Icon width */
-            height: 24px; /* Icon height */
-            margin: 0 10px; /* Margin between icons */
-            filter: brightness(0) invert(1); /* Make icons white */
-        }
-    </style>
 </head>
-<body>
-    <div class="parallax">
-        <div class="parallax-layer parallax-layer-1"></div>
-        <div class="parallax-layer parallax-layer-2"></div>
-        <div class="parallax-layer parallax-layer-3"></div>
-        <div class="parallax-content">
-            <h1>
-                <span class="special left-bracket">{</span>
-                Game Development Portfolio
-                <span class="special right-bracket">}</span>
-            </h1>
-            <p>Pedro Neves</p>
+<body class="portfolio-body">
+    <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+    <div class="grain" aria-hidden="true"></div>
+
+    <button type="button" class="hamburger" id="menu-toggle" aria-label="Open navigation menu" aria-expanded="false">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </button>
+
+    <div class="menu-overlay" id="menu-overlay" hidden>
+        <div class="menu-panel">
+            <p class="menu-kicker">// NAV</p>
+            <h2 class="menu-heading">Where to?</h2>
+            <nav class="menu-choices" aria-label="Site sections">
+                <button type="button" class="choice-btn" data-target="scene-about">More about me</button>
+                <button type="button" class="choice-btn" data-target="scene-unity">Unity projects</button>
+                <button type="button" class="choice-btn" data-target="scene-others">3D, VFX &amp; more</button>
+            </nav>
+            <button type="button" class="replay-intro-btn" id="replay-intro">Replay intro</button>
         </div>
     </div>
-    
 
-    <section class="section about-me">
-        <h2>About Me</h2>
-        <div class="about-me-text-container">
-            <p class="about-me-text">I'm Pedro Neves, a game developer who thrives on creating compelling and innovative experiences. With expertise in C#, Unity, and Unreal Engine, I focus on pushing the limits of gameplay to deliver engaging and challenging mechanics. I use Scrum and sprint methodologies to ensure efficient project management and that I meet deadlines.</p>
-            <p class="about-me-text">I enjoy taking established concepts and turning them upside down, crafting experiences that challenge players in unexpected ways. Explore my projects to see how I turn concepts into reality.</p>
+    <div class="intro-overlay" id="intro-overlay" role="dialog" aria-modal="true" aria-labelledby="intro-title">
+        <div class="dialogue-frame">
+            <div class="dialogue-header">
+                <span class="dialogue-speaker" id="intro-title">You</span>
+                <span class="dialogue-meta">checkpoint</span>
+            </div>
+            <p class="dialogue-line" id="dialogue-line"></p>
+            <div class="dialogue-choices" id="dialogue-choices" hidden></div>
+            <button type="button" class="dialogue-skip" id="dialogue-skip">Skip</button>
         </div>
-    </section>
+    </div>
 
-    <section class="section showreel">
-        <h2>Showreel</h2>
-        <iframe src="https://www.youtube.com/embed/z96REqKgDU0" 
-                title="YouTube video player" 
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen></iframe>
-    </section>
-
-    <section id="projects" class="projects-section">
-        <h2>My Projects</h2>
-        <div class="projects-container" id="projects-container">
-            <!-- Project cards will be dynamically inserted here -->
-        </div>
-        
-    </section>
-
-    <!-- Game Overview Modal -->
-    <div id="game-overview" class="game-overview">
-        <div class="game-content">
-            <button class="close-overview" onclick="closeGameOverview()">&times;</button>
-            <h2 id="game-title">Loading...</h2>
-            <div id="carousel" class="carousel-container">
-                <div class="carousel">
-                    <!-- Carousel slides will be dynamically inserted here -->
+    <main id="main-scroll">
+        <section id="scene-hero" class="scene scene-hero" data-parallax="0.15">
+            <div class="hero-inner">
+                <p class="hero-eyebrow">Game dev · Unity · Experiments</p>
+                <h1 class="hero-title">Pedro Neves</h1>
+                <p class="hero-sub">Play through the work — scroll, or use the menu.</p>
+                <div class="scroll-hint" aria-hidden="true">
+                    <span>Scroll</span>
+                    <span class="scroll-line"></span>
                 </div>
-                <button class="carousel-button left" onclick="prevSlide()">&#10094;</button>
-                <button class="carousel-button right" onclick="nextSlide()">&#10095;</button>
             </div>
-            <p id="game-description">Loading...</p>
-            <div id="unity-container">
-                <!-- Unity build will be embedded here -->
-            </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Footer Section -->
-    <footer>
+        <section id="scene-about" class="scene scene-about" data-parallax="0.08">
+            <div class="scene-inner scene-inner--narrow">
+                <span class="scene-num">01</span>
+                <h2 class="scene-title">About</h2>
+                <div class="about-me-text-container">
+                    <p class="about-me-text">I'm Pedro Neves, a game developer who thrives on creating compelling and innovative experiences. With expertise in C#, Unity, and Unreal Engine, I focus on pushing the limits of gameplay to deliver engaging and challenging mechanics. I use Scrum and sprint methodologies to ensure efficient project management and that I meet deadlines.</p>
+                    <p class="about-me-text">I enjoy taking established concepts and turning them upside down, crafting experiences that challenge players in unexpected ways. Explore my projects to see how I turn concepts into reality.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="scene-unity" class="scene scene-unity">
+            <div class="scene-inner scene-inner--wide">
+                <span class="scene-num">02</span>
+                <h2 class="scene-title">Unity projects</h2>
+                <p class="scene-lead">One screen per project — pick a title to open the full overview.</p>
+            </div>
+            <div class="projects-books" id="projects-container"></div>
+        </section>
+
+        <section id="scene-others" class="scene scene-others" data-parallax="0.06">
+            <div class="scene-inner scene-inner--wide">
+                <span class="scene-num">03</span>
+                <h2 class="scene-title">3D, VFX &amp; more</h2>
+                <p class="scene-lead">Showreel and side experiments — the space beyond shipped games.</p>
+                <div class="showreel-wrap">
+                    <iframe src="https://www.youtube.com/embed/z96REqKgDU0"
+                            title="Showreel"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+                <p class="others-note">Drop in reels, breakdowns, or ArtStation links here when you are ready — this block is yours to extend.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
         <div class="footer-container">
-            <a href="https://www.linkedin.com/in/pedroneves-dev/" target="_blank">
+            <a href="https://www.linkedin.com/in/pedroneves-dev/" target="_blank" rel="noopener noreferrer">
                 <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" class="social-icon">
             </a>
-            <a href="https://pedronevesdev.itch.io/" target="_blank">
+            <a href="https://pedronevesdev.itch.io/" target="_blank" rel="noopener noreferrer">
                 <img src="itchio-textless-black.png" alt="Itch.io" class="social-icon">
             </a>
-            <a href="https://github.com/PedroNevesDev" target="_blank">
+            <a href="https://github.com/PedroNevesDev" target="_blank" rel="noopener noreferrer">
                 <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" class="social-icon">
             </a>
         </div>
-        <p><a href="mailto:pedronevesdev.info@gmail.com" style="color: white;">pedronevesdev.info@gmail.com</a></p>
-        <p>&copy; 2024 Pedro Neves. All rights reserved.</p>
+        <p><a href="mailto:pedronevesdev.info@gmail.com" class="footer-mail">pedronevesdev.info@gmail.com</a></p>
+        <p class="footer-copy">&copy; 2026 Pedro Neves. All rights reserved.</p>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/ambient.js"></script>
     <script src="js/scripts.js"></script>
-    <script src="js/gameoverview.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
