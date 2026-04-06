@@ -1,5 +1,43 @@
 (function () {
     const projects = window.PORTFOLIO_PROJECT_ORDER || [];
+    const STORAGE_THEME = 'pn_portfolio_theme';
+
+    function setPortfolioTheme(dark) {
+        try {
+            if (dark) {
+                document.body.classList.add('theme-dark');
+                localStorage.setItem(STORAGE_THEME, 'dark');
+            } else {
+                document.body.classList.remove('theme-dark');
+                localStorage.setItem(STORAGE_THEME, 'light');
+            }
+        } catch (err) {
+            document.body.classList.toggle('theme-dark', !!dark);
+        }
+        window.dispatchEvent(new CustomEvent('portfolio-themechange'));
+    }
+
+    function initLightsToggle() {
+        const btn = document.getElementById('lights-toggle');
+        if (!btn) return;
+
+        const label = btn.querySelector('.lights-toggle__text');
+        function syncButton() {
+            const dark = document.body.classList.contains('theme-dark');
+            btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+            const t = dark ? 'Turn on the lights' : 'Turn off the lights';
+            btn.setAttribute('aria-label', t);
+            if (label) {
+                label.textContent = t;
+            }
+        }
+
+        btn.addEventListener('click', function () {
+            setPortfolioTheme(!document.body.classList.contains('theme-dark'));
+        });
+        window.addEventListener('portfolio-themechange', syncButton);
+        syncButton();
+    }
 
     let currentSlide = 0;
 
@@ -63,6 +101,8 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
+        initLightsToggle();
+
         var params = new URLSearchParams(window.location.search);
         var project = params.get('project');
 

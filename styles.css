@@ -134,6 +134,33 @@ body.intro-open .hub-viewport {
     }
 }
 
+/* Angled “room” fills — clipped planes behind content */
+.hub-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    box-sizing: border-box;
+    opacity: 0.96;
+}
+.hub-panel:nth-child(odd)::before {
+    clip-path: polygon(0 0, 100% 4.5%, 100% 100%, 0 95.5%);
+}
+.hub-panel:nth-child(even)::before {
+    clip-path: polygon(0 4.5%, 100% 0, 100% 95.5%, 0 100%);
+}
+.hub-panel:not(.hub-panel--about)::before {
+    opacity: 0;
+}
+.hub-panel--about::before {
+    background: linear-gradient(168deg, #faf8f4 0%, #f3ebe2 45%, #efe4d8 100%);
+}
+.hub-panel > * {
+    position: relative;
+    z-index: 1;
+}
+
 .hub-arrow {
     position: fixed;
     top: 50%;
@@ -886,7 +913,7 @@ a:hover {
     margin: 0 0 1.25rem;
 }
 
-/* Unity projects — vertical catalog (focus fade) + shared carousel panels */
+/* Projects — vertical catalog (focus fade) + shared carousel panels */
 .hub-panel--projects,
 .hub-panel--carousel {
     display: flex;
@@ -1352,6 +1379,15 @@ body.theme-dark .grain {
     mix-blend-mode: soft-light;
 }
 
+/* Only About keeps the dark angled “room” card; other rooms use the global bg + ambient */
+body.theme-dark .hub-panel:not(.hub-panel--about)::before {
+    opacity: 0;
+}
+body.theme-dark .hub-panel--about::before {
+    opacity: 0.96;
+    background: linear-gradient(168deg, #141d18 0%, var(--bg-deep) 55%, rgba(94, 207, 154, 0.1) 100%);
+}
+
 body.theme-dark .hub-dock {
     background: rgba(12, 22, 17, 0.55);
     border-top-color: rgba(255, 255, 255, 0.06);
@@ -1377,7 +1413,7 @@ body.theme-dark .lights-toggle {
 
 body.theme-dark .projects-panel-head,
 body.theme-dark .carousel-panel-head {
-    background: linear-gradient(180deg, rgba(12, 22, 17, 0.96) 0%, rgba(12, 22, 17, 0.82) 65%, transparent 100%);
+    background: linear-gradient(180deg, rgba(12, 22, 17, 0.38) 0%, rgba(12, 22, 17, 0.12) 55%, transparent 100%);
 }
 
 body.theme-dark .kbd-hint {

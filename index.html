@@ -13,8 +13,14 @@
     <script>
         (function () {
             try {
-                if (localStorage.getItem('pn_portfolio_theme') === 'dark') document.body.classList.add('theme-dark');
-            } catch (e) {}
+                if (localStorage.getItem('pn_portfolio_theme') === 'light') {
+                    document.body.classList.remove('theme-dark');
+                } else {
+                    document.body.classList.add('theme-dark');
+                }
+            } catch (e) {
+                document.body.classList.add('theme-dark');
+            }
         })();
     </script>
     <canvas id="ambient-canvas" aria-hidden="true"></canvas>
@@ -46,7 +52,7 @@
             <section class="hub-panel hub-panel--home" id="panel-home" data-panel-index="0" aria-label="Home">
                 <div class="scene scene-hero scene-hero--solo" data-parallax="0.12">
                     <div class="hero-inner">
-                        <p class="hero-eyebrow">Game dev · Unity · Experiments</p>
+                        <p class="hero-eyebrow">Games · Tools · Visual experiments</p>
                         <h1 class="hero-title">Pedro Neves</h1>
                         <nav class="hero-socials" aria-label="Social links">
                             <a class="hero-socials__link" href="https://www.linkedin.com/in/pedroneves-dev/" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn">
@@ -73,18 +79,18 @@
                         <h2 class="scene-title">About</h2>
                         <div class="about-me-text-container">
                             <p class="about-me-text">I'm Pedro Neves, a game developer who thrives on creating compelling and innovative experiences. With expertise in C#, Unity, and Unreal Engine, I focus on pushing the limits of gameplay to deliver engaging and challenging mechanics. I use Scrum and sprint methodologies to ensure efficient project management and that I meet deadlines.</p>
-                            <p class="about-me-text">I enjoy taking established concepts and turning them upside down, crafting experiences that challenge players in unexpected ways. Explore my projects to see how I turn concepts into reality.</p>
+                            <p class="about-me-text">I enjoy taking established concepts and turning them upside down, crafting experiences that challenge players in unexpected ways. The games here are mostly prototypes and jam pieces; the apps I shipped for Erasmus live alongside them.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="hub-panel hub-panel--projects" id="panel-projects" data-panel-index="2" aria-label="Unity projects">
+            <section class="hub-panel hub-panel--projects" id="panel-projects" data-panel-index="2" aria-label="Projects">
                 <div class="projects-panel-head">
                     <div class="panel-header">
                         <span class="scene-num">02</span>
-                        <h2 class="scene-title">Unity projects</h2>
-                        <p class="scene-lead">Unity work — one project per slide.</p>
+                        <h2 class="scene-title">Projects</h2>
+                        <p class="scene-lead">Mostly prototypes and game jams; the shipped work is Erasmus apps on web, Android, and iOS — one per slide.</p>
                         <p class="panel-scroll-hint">Scroll, or press <kbd class="kbd-hint">↓</kbd> <kbd class="kbd-hint">↑</kbd> between projects.</p>
                     </div>
                 </div>

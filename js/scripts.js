@@ -25,7 +25,7 @@
 
     const introSteps = [
         { speaker: 'Pedro', text: 'Welcome to my portfolio.' },
-        { speaker: 'Pedro', text: "I'm Pedro Neves — I build games, tools, and visual experiments." },
+        { speaker: 'Pedro', text: "I'm Pedro Neves — I make games, build tools, and prototype visual experiments." },
         { speaker: 'Pedro', text: 'Choose a room — each one is its own space.', showChoices: true },
     ];
 
@@ -215,6 +215,16 @@
         if (!hubRail || index < 0 || index >= PANEL_COUNT) return;
         const w = hubRail.clientWidth;
         if (w === 0) return;
+        const from = currentPanelFromScroll();
+        if (index !== from && Math.abs(index - from) > 1) {
+            window.dispatchEvent(
+                new CustomEvent('hub-ambient-skip', {
+                    detail: { from: from, to: index },
+                })
+            );
+        } else {
+            window.dispatchEvent(new CustomEvent('hub-ambient-skip', { detail: { clear: true } }));
+        }
         hubRail.scrollTo({
             left: index * w,
             behavior: smooth ? 'smooth' : 'auto',
@@ -338,17 +348,19 @@
         runIntroStep();
     }
 
+    const INTRO_TYPE_MS = 44;
+    const INTRO_LINE_PAUSE_MS = 820;
+
     function typeText(full, done) {
         if (typeTimer) clearTimeout(typeTimer);
         dialogueLine.textContent = '';
         let i = 0;
-        const speed = 22;
 
         function tick() {
             if (i <= full.length) {
                 dialogueLine.textContent = full.slice(0, i);
                 i++;
-                typeTimer = setTimeout(tick, speed);
+                typeTimer = setTimeout(tick, INTRO_TYPE_MS);
             } else {
                 typeTimer = null;
                 if (done) done();
@@ -401,7 +413,7 @@
 
         typeText(step.text, function () {
             introStep++;
-            setTimeout(runIntroStep, 450);
+            setTimeout(runIntroStep, INTRO_LINE_PAUSE_MS);
         });
     }
 

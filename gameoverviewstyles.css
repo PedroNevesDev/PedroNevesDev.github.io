@@ -246,3 +246,46 @@
         aspect-ratio: 4 / 3;
     }
 }
+
+/* Dark theme — align with portfolio (styles.css vars + mint accents) */
+body.page-game-overview.theme-dark .overview-panel {
+    border-color: rgba(94, 207, 154, 0.28);
+    background: rgba(14, 22, 18, 0.92);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+}
+body.page-game-overview.theme-dark .go-carousel-wrap {
+    background: linear-gradient(180deg, #101814 0%, #0a100d 100%);
+    border-bottom-color: var(--border);
+}
+body.page-game-overview.theme-dark .go-carousel-slide {
+    background: radial-gradient(ellipse at center, #1a2620 0%, #0f1814 72%);
+}
+body.page-game-overview.theme-dark .go-carousel-btn {
+    border-color: rgba(94, 207, 154, 0.4);
+    background: rgba(12, 22, 17, 0.92);
+    color: var(--accent-hot);
+}
+body.page-game-overview.theme-dark .go-carousel-btn:hover {
+    border-color: rgba(94, 207, 154, 0.65);
+    background: rgba(18, 32, 25, 0.95);
+}
+body.page-game-overview.theme-dark .go-play-btn {
+    border-color: rgba(94, 207, 154, 0.45);
+    background: linear-gradient(135deg, rgba(94, 207, 154, 0.18) 0%, rgba(94, 207, 154, 0.08) 100%);
+    color: var(--accent-hot);
+}
+body.page-game-overview.theme-dark .go-play-btn:hover {
+    background: linear-gradient(135deg, rgba(94, 207, 154, 0.28) 0%, rgba(94, 207, 154, 0.14) 100%);
+    box-shadow: 0 6px 24px rgba(94, 207, 154, 0.15);
+}
+body.page-game-overview.theme-dark .collapsible {
+    border-color: var(--border);
+    background: rgba(8, 14, 11, 0.5);
+}
+body.page-game-overview.theme-dark .collapsible-title:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+body.page-game-overview.theme-dark .site-footer--compact {
+    background: transparent;
+    border-top-color: var(--border);
+}

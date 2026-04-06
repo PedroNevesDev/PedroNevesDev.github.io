@@ -11,6 +11,19 @@
     <link rel="stylesheet" href="gameoverviewstyles.css">
 </head>
 <body class="portfolio-body page-game-overview">
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('pn_portfolio_theme') === 'light') {
+                    document.body.classList.remove('theme-dark');
+                } else {
+                    document.body.classList.add('theme-dark');
+                }
+            } catch (e) {
+                document.body.classList.add('theme-dark');
+            }
+        })();
+    </script>
     <canvas id="ambient-canvas" aria-hidden="true"></canvas>
     <div class="grain" aria-hidden="true"></div>
 
@@ -55,6 +68,11 @@
     <footer class="site-footer site-footer--compact">
         <p class="footer-copy">&copy; 2026 Pedro Neves</p>
     </footer>
+
+    <button type="button" class="lights-toggle" id="lights-toggle" aria-pressed="false" title="Bright theme or dark green room">
+        <span class="lights-toggle__icon" aria-hidden="true">◐</span>
+        <span class="lights-toggle__text">Turn off the lights</span>
+    </button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="js/ambient.js"></script>
