@@ -420,10 +420,6 @@ body.intro-open .hub-viewport {
 }
 
 /* Contact panel */
-.scene-lead--contact {
-    margin-bottom: 1.25rem;
-    font-size: 0.95rem;
-}
 .contact-form {
     text-align: left;
     margin-top: 0.5rem;
