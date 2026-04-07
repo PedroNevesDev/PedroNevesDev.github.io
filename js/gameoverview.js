@@ -1,5 +1,5 @@
 (function () {
-    const projects = window.PORTFOLIO_PROJECT_ORDER || [];
+    const projects = Array.isArray(window.PORTFOLIO_PROJECT_ORDER) ? window.PORTFOLIO_PROJECT_ORDER : [];
     const STORAGE_THEME = 'pn_portfolio_theme';
 
     function setPortfolioTheme(dark) {

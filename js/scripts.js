@@ -1,13 +1,7 @@
 (function () {
     const STORAGE_INTRO = 'pn_portfolio_intro_done_v1';
 
-    const projects = window.PORTFOLIO_PROJECT_ORDER || [
-        'Heisties',
-        'PerfectClue',
-        'Lou',
-        'Plantaforma',
-        'FryMe',
-    ];
+    const projects = Array.isArray(window.PORTFOLIO_PROJECT_ORDER) ? window.PORTFOLIO_PROJECT_ORDER : [];
     const basePath = 'projects/';
 
     const PANEL_COUNT = 6;
@@ -492,6 +486,32 @@
         });
     }
 
+    function fetchOkText(url) {
+        return fetch(url).then(function (r) {
+            if (!r.ok) {
+                throw new Error('Failed to load ' + url + ' (' + r.status + ')');
+            }
+            return r.text();
+        });
+    }
+
+    function fetchOkBlob(url) {
+        return fetch(url).then(function (r) {
+            if (!r.ok) {
+                throw new Error('Failed to load ' + url + ' (' + r.status + ')');
+            }
+            return r.blob();
+        });
+    }
+
+    function escapeHtml(s) {
+        return String(s)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
     function loadProjects() {
         const container = document.getElementById('projects-container');
         if (!container) return Promise.resolve();
@@ -507,21 +527,17 @@
             const projectPath = basePath + slot.project + '/';
 
             return Promise.all([
-                fetch(projectPath + 'title.txt').then(function (r) {
-                    return r.text();
-                }),
-                fetch(projectPath + 'description.txt').then(function (r) {
-                    return r.text();
-                }),
-                fetch(projectPath + 'image.png').then(function (r) {
-                    return r.blob();
-                }),
+                fetchOkText(projectPath + 'title.txt'),
+                fetchOkText(projectPath + 'description.txt'),
+                fetchOkBlob(projectPath + 'image.png'),
             ])
                 .then(function (results) {
                     const title = results[0];
                     const description = results[1];
                     const imageUrl = URL.createObjectURL(results[2]);
                     const num = String(slot.index + 1).padStart(2, '0');
+                    const titleSafe = escapeHtml(title.trim());
+                    const descSafe = escapeHtml(description.trim());
 
                     slot.article.classList.remove('project-book--loading');
                     slot.article.innerHTML =
@@ -531,7 +547,7 @@
                         '<img src="' +
                         imageUrl +
                         '" alt="' +
-                        title.trim().replace(/"/g, '&quot;') +
+                        titleSafe +
                         '">' +
                         '</a>' +
                         '<div class="project-book__meta">' +
@@ -539,10 +555,10 @@
                         num +
                         '</span>' +
                         '<h3 class="project-book__title">' +
-                        title.trim() +
+                        titleSafe +
                         '</h3>' +
                         '<p class="project-book__excerpt">' +
-                        description.trim() +
+                        descSafe +
                         '</p>' +
                         '<a class="project-book__link" href="gameoverview.html?project=' +
                         encodeURIComponent(slot.project) +

@@ -5,4 +5,6 @@ window.PORTFOLIO_PROJECT_ORDER = [
     'Lou',
     'Plantaforma',
     'FryMe',
+    'GameCRIT',
+    'SOL',
 ];
