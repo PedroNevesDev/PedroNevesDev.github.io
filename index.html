@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body class="portfolio-body">
     <script>
@@ -187,9 +187,20 @@
     </nav>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="js/ambient.js"></script>
-    <script src="js/projects-config.js?v=2"></script>
-    <script src="js/site-config.js"></script>
-    <script src="js/scripts.js?v=2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="js/projects-config.js?v=3"></script>
+    <script src="js/site-config.js?v=3"></script>
+    <script>
+        /* ── Ambient 3D config — edit here, changes apply on normal reload ──
+         * AMBIENT_TEMPLATE: 0=icosahedron+knot+octahedron  1=dodecahedron+torus+tetrahedron
+         *                   2=sphere+knot+cone  3=box+octahedron+icosahedron
+         *                   4=three torus-knots  5=tetrahedron+icosahedron+dodecahedron
+         * AMBIENT_GLTF: path to your .glb in ambient/ folder, or null
+         * ──────────────────────────────────────────────────────────────────── */
+        window.AMBIENT_TEMPLATE = 0;
+        window.AMBIENT_GLTF     = null;
+    </script>
+    <script src="js/ambient.js?v=5"></script>
+    <script src="js/scripts.js?v=3"></script>
 </body>
 </html>
