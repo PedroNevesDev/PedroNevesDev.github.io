@@ -11,15 +11,15 @@
     const basePath = 'projects/';
 
     const PANEL_COUNT = 6;
-    const PANEL_NAMES = ['Home', 'About', 'Projects', 'Showreel', '3D / VFX', 'Contact'];
-    const INDEX_TO_HASH = ['#home', '#about', '#projects', '#reel', '#vfx', '#contact'];
+    const PANEL_NAMES = ['Home', 'About', 'Projects', '3D / VFX', 'Showreel', 'Contact'];
+    const INDEX_TO_HASH = ['#home', '#about', '#projects', '#vfx', '#reel', '#contact'];
     const HASH_TO_INDEX = {
         '': 0,
         '#home': 0,
         '#about': 1,
         '#projects': 2,
-        '#reel': 3,
-        '#vfx': 4,
+        '#vfx': 3,
+        '#reel': 4,
         '#contact': 5,
     };
 
@@ -108,6 +108,7 @@
             'wheel',
             function (e) {
                 if (currentPanelFromScroll() !== hubIndex) return;
+                if (e.target && e.target.tagName === 'IFRAME') return;
                 if (e.target.closest('input, textarea, select, [contenteditable]')) return;
                 if (Math.abs(e.deltaX) > Math.abs(e.deltaY) * 1.15) return;
 
@@ -156,7 +157,7 @@
         const catalog = document.getElementById('reel-catalog');
         const slides = document.getElementById('reel-slides');
         if (!panel || !catalog || !slides) return;
-        attachVerticalCarousel(panel, 3, catalog, slides, '.hub-carousel-slide');
+        attachVerticalCarousel(panel, 4, catalog, slides, '.hub-carousel-slide');
     }
 
     function initVfxCarousel() {
@@ -165,7 +166,7 @@
         const slidesRoot = document.getElementById('vfx-slides');
         if (!panel || !catalog || !slidesRoot) return;
         if (!slidesRoot.querySelector('.hub-carousel-slide')) return;
-        attachVerticalCarousel(panel, 4, catalog, slidesRoot, '.hub-carousel-slide');
+        attachVerticalCarousel(panel, 3, catalog, slidesRoot, '.hub-carousel-slide');
     }
 
     function getHashIndex() {
@@ -376,8 +377,8 @@
             { label: 'Home', panel: 0 },
             { label: 'About', panel: 1 },
             { label: 'Projects', panel: 2 },
-            { label: 'Showreel', panel: 3 },
-            { label: '3D / VFX', panel: 4 },
+            { label: '3D / VFX', panel: 3 },
+            { label: 'Showreel', panel: 4 },
             { label: 'Contact', panel: 5 },
         ];
         targets.forEach(function (t) {
@@ -615,6 +616,23 @@
         updateFocus();
     }
 
+    function parseYoutubeEmbedUrl(input) {
+        if (!input) return null;
+        const s = String(input).trim();
+        if (!s) return null;
+        if (/youtube\.com\/embed\//i.test(s)) {
+            return s.split('&')[0];
+        }
+        const shortM = s.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+        if (shortM) return 'https://www.youtube.com/embed/' + shortM[1];
+        const shortsM = s.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/i);
+        if (shortsM) return 'https://www.youtube.com/embed/' + shortsM[1];
+        const vM = s.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+        if (vM) return 'https://www.youtube.com/embed/' + vM[1];
+        if (/^[a-zA-Z0-9_-]{11}$/.test(s)) return 'https://www.youtube.com/embed/' + s;
+        return null;
+    }
+
     function loadVfxGallery() {
         const root = document.getElementById('vfx-slides');
         if (!root) return;
@@ -627,34 +645,55 @@
                 const items = (data && data.items) || [];
                 if (!items.length) {
                     root.innerHTML =
-                        '<p class="vfx-empty">Nothing here yet — add entries to <code class="inline-code">vfx/gallery.json</code> and media under <code class="inline-code">vfx/</code>.</p>';
+                        '<p class="vfx-empty">Nothing here yet — add entries to <code class="inline-code">vfx/gallery.json</code> (YouTube URLs or files under <code class="inline-code">vfx/</code>).</p>';
                     return;
                 }
 
                 root.innerHTML = '';
 
                 items.forEach(function (item) {
-                    if (!item || !item.src) return;
+                    if (!item) return;
+
+                    let embedUrl = null;
+                    if (item.youtube || item.youtubeUrl) {
+                        embedUrl = parseYoutubeEmbedUrl(item.youtube || item.youtubeUrl);
+                    } else if (item.src && /^https?:\/\//i.test(String(item.src).trim())) {
+                        embedUrl = parseYoutubeEmbedUrl(item.src);
+                    }
+
+                    if (!embedUrl && !item.src) return;
 
                     const fig = document.createElement('figure');
                     fig.className = 'vfx-gallery__item';
 
-                    const src = 'vfx/' + String(item.src).replace(/^\//, '');
-                    const isVid = /\.(mp4|webm|ogg)$/i.test(item.src);
-
                     let el;
-                    if (isVid) {
-                        el = document.createElement('video');
-                        el.src = src;
-                        el.controls = true;
-                        el.muted = true;
-                        el.loop = true;
-                        el.playsInline = true;
-                    } else {
-                        el = document.createElement('img');
-                        el.src = src;
-                        el.alt = item.alt || '';
+                    if (embedUrl) {
+                        el = document.createElement('iframe');
+                        el.className = 'vfx-gallery__iframe';
+                        el.src = embedUrl + (embedUrl.indexOf('?') === -1 ? '?' : '&') + 'rel=0';
+                        el.title = item.alt || 'YouTube video';
+                        el.setAttribute('allowfullscreen', '');
+                        el.setAttribute(
+                            'allow',
+                            'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+                        );
                         el.loading = 'lazy';
+                    } else {
+                        const src = 'vfx/' + String(item.src).replace(/^\//, '');
+                        const isVid = /\.(mp4|webm|ogg)$/i.test(item.src);
+                        if (isVid) {
+                            el = document.createElement('video');
+                            el.src = src;
+                            el.controls = true;
+                            el.muted = true;
+                            el.loop = true;
+                            el.playsInline = true;
+                        } else {
+                            el = document.createElement('img');
+                            el.src = src;
+                            el.alt = item.alt || '';
+                            el.loading = 'lazy';
+                        }
                     }
 
                     fig.appendChild(el);
@@ -859,7 +898,11 @@
                 }
             });
             panels.forEach(function (panel, i) {
-                panel.style.opacity = i === activeIdx ? '1' : String(INACTIVE_OPACITY);
+                if (panel.id === 'panel-reel') {
+                    panel.style.opacity = '1';
+                } else {
+                    panel.style.opacity = i === activeIdx ? '1' : String(INACTIVE_OPACITY);
+                }
                 panel.classList.toggle('hub-panel--active', i === activeIdx);
             });
         }

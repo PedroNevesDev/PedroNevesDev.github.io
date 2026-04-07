@@ -78,8 +78,13 @@
                         <span class="scene-num">01</span>
                         <h2 class="scene-title">About</h2>
                         <div class="about-me-text-container">
-                            <p class="about-me-text">I'm Pedro Neves, a game developer who thrives on creating compelling and innovative experiences. With expertise in C#, Unity, and Unreal Engine, I focus on pushing the limits of gameplay to deliver engaging and challenging mechanics. I use Scrum and sprint methodologies to ensure efficient project management and that I meet deadlines.</p>
-                            <p class="about-me-text">I enjoy taking established concepts and turning them upside down, crafting experiences that challenge players in unexpected ways. The games here are mostly prototypes and jam pieces; the apps I shipped for Erasmus live alongside them.</p>
+                            <p class="about-me-text">I'm Pedro Neves — I build games and tools in Unity and Unreal, mostly in C#. I teach Unity development in Portugal.</p>
+                            <p class="about-me-text">I love game development from narrative and design through technical art and VFX. I'm passionate about art and how things look — some stretches I push 3D, others pixel work, others drawing; sometimes I'm deep in Shader Graph building my own shaders. I'm into illumination and post-processing too.</p>
+                            <p class="about-me-text">I'm at home in the Adobe suite, Blender, Unity, Git, and Notion — art and motion, 3D, the engine, version control, and keeping projects from exploding.</p>
+                            <p class="about-me-text">What's here is the messy middle of a career: game jams, course work, prototypes, and a few Erasmus apps shipped to web and mobile. I gravitate toward ideas that twist familiar mechanics into something stranger.</p>
+                            <p class="about-resume">
+                                <a href="CV_compressed_links.pdf" class="about-resume__link" download="CV_compressed_links.pdf">Download CV (PDF)</a>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -99,10 +104,24 @@
                 </div>
             </section>
 
-            <section class="hub-panel hub-panel--reel hub-panel--carousel" id="panel-reel" data-panel-index="3" aria-label="Showreel">
+            <section class="hub-panel hub-panel--vfx hub-panel--carousel" id="panel-vfx" data-panel-index="3" aria-label="3D and VFX">
+                <div class="carousel-panel-head vfx-panel-head">
+                    <div class="panel-header">
+                        <span class="scene-num">03</span>
+                        <h2 class="scene-title">3D &amp; VFX</h2>
+                        <p class="scene-lead">Stills, loops and images. Small showcases of tools, VFX, and art.</p>
+                        <p class="panel-scroll-hint">Scroll, or <kbd class="kbd-hint">↓</kbd> <kbd class="kbd-hint">↑</kbd> through each piece.</p>
+                    </div>
+                </div>
+                <div class="carousel-catalog vfx-catalog" id="vfx-catalog" aria-live="polite">
+                    <div class="carousel-slides" id="vfx-slides"></div>
+                </div>
+            </section>
+
+            <section class="hub-panel hub-panel--reel hub-panel--carousel" id="panel-reel" data-panel-index="4" aria-label="Showreel">
                 <div class="carousel-panel-head reel-panel-head">
                     <div class="panel-header panel-header--center">
-                        <span class="scene-num">03</span>
+                        <span class="scene-num">04</span>
                         <h2 class="scene-title">Showreel</h2>
                         <p class="scene-lead">Generalist reel — motion, games, experiments.</p>
                         <p class="panel-scroll-hint panel-scroll-hint--center">Use <kbd class="kbd-hint">←</kbd> <kbd class="kbd-hint">→</kbd> or the dock to visit other rooms.</p>
@@ -121,21 +140,6 @@
                             </div>
                         </article>
                     </div>
-                </div>
-            </section>
-
-            <section class="hub-panel hub-panel--vfx hub-panel--carousel" id="panel-vfx" data-panel-index="4" aria-label="3D and VFX">
-                <div class="carousel-panel-head vfx-panel-head">
-                    <div class="panel-header">
-                        <span class="scene-num">04</span>
-                        <h2 class="scene-title">3D &amp; VFX</h2>
-                        <p class="scene-lead">Stills, GIFs, and loops — add them via <code class="inline-code">vfx/gallery.json</code>.</p>
-                        <p class="panel-scroll-hint">Scroll, or <kbd class="kbd-hint">↓</kbd> <kbd class="kbd-hint">↑</kbd> through each piece.</p>
-                        <p class="vfx-hint vfx-hint--head">Each <code class="inline-code">items[]</code> entry: <code class="inline-code">"src"</code>, <code class="inline-code">"alt"</code>, optional <code class="inline-code">"caption"</code>. GIF, PNG, JPG, WebP, MP4, WebM.</p>
-                    </div>
-                </div>
-                <div class="carousel-catalog vfx-catalog" id="vfx-catalog" aria-live="polite">
-                    <div class="carousel-slides" id="vfx-slides"></div>
                 </div>
             </section>
 
@@ -178,8 +182,8 @@
         <button type="button" class="hub-dock__btn is-active" data-panel="0" aria-current="page">Home</button>
         <button type="button" class="hub-dock__btn" data-panel="1">About</button>
         <button type="button" class="hub-dock__btn" data-panel="2">Projects</button>
-        <button type="button" class="hub-dock__btn" data-panel="3">Reel</button>
-        <button type="button" class="hub-dock__btn" data-panel="4">3D</button>
+        <button type="button" class="hub-dock__btn" data-panel="3">3D</button>
+        <button type="button" class="hub-dock__btn" data-panel="4">Reel</button>
         <button type="button" class="hub-dock__btn" data-panel="5">Contact</button>
     </nav>
 

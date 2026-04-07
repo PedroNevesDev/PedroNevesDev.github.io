@@ -921,6 +921,27 @@ a:hover {
     color: var(--text-muted);
     margin: 0 0 1.25rem;
 }
+.about-resume {
+    margin: 1.35rem 0 0;
+    padding-top: 1.15rem;
+    border-top: 1px solid var(--border);
+}
+.about-resume__link {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-soft);
+    padding-bottom: 2px;
+    transition: border-color 0.2s, color 0.2s;
+}
+.about-resume__link:hover {
+    border-bottom-color: var(--accent);
+    color: var(--accent-hot);
+}
 
 /* Projects — vertical catalog (focus fade) + shared carousel panels */
 .hub-panel--projects,
@@ -1001,11 +1022,6 @@ a:hover {
     width: 100%;
     max-width: min(920px, 100%);
     margin: 0 auto;
-}
-
-.vfx-hint--head {
-    margin-top: 0.75rem;
-    margin-bottom: 0;
 }
 
 .project-book {
@@ -1195,6 +1211,15 @@ a:hover {
     background: #f0ebe8;
     display: block;
 }
+.vfx-gallery__item iframe,
+.vfx-gallery__iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border: 0;
+    display: block;
+    background: #0b0b0b;
+}
 .vfx-gallery__item figcaption {
     padding: 0.65rem 0.85rem;
     font-size: 0.85rem;
@@ -1208,13 +1233,6 @@ a:hover {
     color: var(--text-muted);
     line-height: 1.6;
     font-style: italic;
-}
-.vfx-hint {
-    margin-top: 1rem;
-    font-size: 0.88rem;
-    color: var(--text-muted);
-    line-height: 1.65;
-    max-width: 62ch;
 }
 .inline-code {
     font-family: ui-monospace, 'Cascadia Code', monospace;
@@ -1477,6 +1495,10 @@ body.theme-dark .contact-submit:hover {
 body.theme-dark .vfx-gallery__item {
     background: rgba(255, 255, 255, 0.04);
     border-color: var(--border);
+}
+body.theme-dark .vfx-gallery__item iframe,
+body.theme-dark .vfx-gallery__iframe {
+    background: #050807;
 }
 
 body.theme-dark .intro-overlay {
