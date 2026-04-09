@@ -903,11 +903,13 @@
             const msg = message.value.trim();
 
             const fd = new FormData();
-            fd.append('_subject', subj);
+            /* Gmail subject line — keep short; body rows use unique names so FormSubmit does not drop "subject". */
+            fd.append('_subject', '[Portfolio] ' + subj);
             fd.append('_replyto', emailVal);
-            fd.append('email', emailVal);
-            fd.append('subject', subj);
-            fd.append('message', msg);
+            fd.append('_template', 'table');
+            fd.append('Visitor_email', emailVal);
+            fd.append('Subject_line', subj);
+            fd.append('Message', msg);
             const gotcha = form.querySelector('[name="_gotcha"]');
             if (gotcha) {
                 fd.append('_gotcha', gotcha.value);
@@ -925,9 +927,14 @@
                 headers: { Accept: 'application/json' },
             })
                 .then(function (res) {
-                    return res.json().then(function (data) {
-                        return { ok: res.ok, data: data };
-                    });
+                    return res.json().then(
+                        function (data) {
+                            return { ok: res.ok, data: data };
+                        },
+                        function () {
+                            return { ok: false, data: { message: 'Unexpected response from mail service.' } };
+                        }
+                    );
                 })
                 .then(function (result) {
                     const d = result.data || {};
