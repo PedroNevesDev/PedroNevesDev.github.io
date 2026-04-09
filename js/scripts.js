@@ -734,7 +734,10 @@
             });
     }
 
+    /** Inbox for the contact form (FormSubmit relay — confirm once via first email from formsubmit.co). */
     const CONTACT_TO = 'pedronevesdev.info@gmail.com';
+    const CONTACT_FORM_SUBMIT_AJAX =
+        'https://formsubmit.co/ajax/' + encodeURIComponent(CONTACT_TO);
     const STORAGE_THEME = 'pn_portfolio_theme';
 
     function setPortfolioTheme(dark) {
@@ -781,6 +784,23 @@
         const siteKey = window.RECAPTCHA_SITE_KEY;
         const recapErr = document.getElementById('contact-recaptcha-error');
         const recapWrap = document.getElementById('contact-recaptcha-wrap');
+        const successEl = document.getElementById('contact-success');
+        const formErrorEl = document.getElementById('contact-form-error');
+        const submitBtn = document.getElementById('contact-submit');
+
+        function hideContactSuccess() {
+            if (successEl) {
+                successEl.hidden = true;
+                successEl.textContent = '';
+            }
+        }
+
+        function hideFormError() {
+            if (formErrorEl) {
+                formErrorEl.hidden = true;
+                formErrorEl.textContent = '';
+            }
+        }
 
         let recaptchaWidgetId = null;
 
@@ -832,13 +852,19 @@
         ['contact-email', 'contact-subject', 'contact-message'].forEach(function (id) {
             const el = document.getElementById(id);
             if (el) {
-                el.addEventListener('input', hideRecapError);
+                el.addEventListener('input', function () {
+                    hideRecapError();
+                    hideContactSuccess();
+                    hideFormError();
+                });
             }
         });
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             hideRecapError();
+            hideFormError();
+            hideContactSuccess();
 
             const email = document.getElementById('contact-email');
             const subject = document.getElementById('contact-subject');
@@ -872,20 +898,80 @@
                 }
             }
 
+            const emailVal = email.value.trim();
             const subj = subject.value.trim();
-            const body =
-                'From: ' + email.value.trim() + '\n\n' + message.value.trim();
-            const url =
-                'mailto:' +
-                CONTACT_TO +
-                '?subject=' +
-                encodeURIComponent(subj) +
-                '&body=' +
-                encodeURIComponent(body);
-            if (recaptchaWidgetId !== null && typeof grecaptcha !== 'undefined') {
-                grecaptcha.reset(recaptchaWidgetId);
+            const msg = message.value.trim();
+
+            const fd = new FormData();
+            fd.append('_subject', subj);
+            fd.append('_replyto', emailVal);
+            fd.append('email', emailVal);
+            fd.append('subject', subj);
+            fd.append('message', msg);
+            const gotcha = form.querySelector('[name="_gotcha"]');
+            if (gotcha) {
+                fd.append('_gotcha', gotcha.value);
             }
-            window.location.href = url;
+
+            const prevLabel = submitBtn ? submitBtn.textContent : '';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending…';
+            }
+
+            fetch(CONTACT_FORM_SUBMIT_AJAX, {
+                method: 'POST',
+                body: fd,
+                headers: { Accept: 'application/json' },
+            })
+                .then(function (res) {
+                    return res.json().then(function (data) {
+                        return { ok: res.ok, data: data };
+                    });
+                })
+                .then(function (result) {
+                    const d = result.data || {};
+                    const succeeded =
+                        result.ok &&
+                        (d.success === true || d.success === 'true');
+                    if (succeeded) {
+                        if (recaptchaWidgetId !== null && typeof grecaptcha !== 'undefined') {
+                            grecaptcha.reset(recaptchaWidgetId);
+                        }
+                        form.reset();
+                        if (successEl) {
+                            successEl.textContent =
+                                'Message sent. If you do not hear back soon, check your spam folder or try again.';
+                            successEl.hidden = false;
+                        }
+                    } else {
+                        const errMsg =
+                            d.message ||
+                            d.error ||
+                            'Could not send. Try again in a moment, or email ' +
+                                CONTACT_TO +
+                                ' directly.';
+                        if (formErrorEl) {
+                            formErrorEl.textContent = errMsg;
+                            formErrorEl.hidden = false;
+                        }
+                    }
+                })
+                .catch(function () {
+                    if (formErrorEl) {
+                        formErrorEl.textContent =
+                            'Network error — check your connection or email ' +
+                            CONTACT_TO +
+                            ' directly.';
+                        formErrorEl.hidden = false;
+                    }
+                })
+                .finally(function () {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = prevLabel || 'Send message';
+                    }
+                });
         });
     }
 

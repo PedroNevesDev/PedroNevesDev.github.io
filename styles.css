@@ -1,4 +1,4 @@
-﻿@font-face {
+@font-face {
     font-family: 'FiraCode';
     src: url(FiraCode-VariableFont_wght.ttf);
 }
@@ -482,6 +482,21 @@ body.intro-open .hub-viewport {
 .contact-submit:active {
     transform: scale(0.99);
 }
+.contact-success {
+    margin: 0.85rem 0 0;
+    padding: 0.75rem 0.9rem;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    max-width: 48ch;
+    border-radius: 6px;
+    border: 1px solid rgba(46, 125, 50, 0.35);
+    background: rgba(46, 125, 50, 0.08);
+    color: var(--text);
+}
+body.theme-dark .contact-success {
+    border-color: rgba(129, 199, 132, 0.35);
+    background: rgba(129, 199, 132, 0.1);
+}
 .contact-note {
     margin: 0.85rem 0 0;
     font-size: 0.8rem;
@@ -504,6 +519,38 @@ body.intro-open .hub-viewport {
     margin: 0.5rem 0 0;
     font-size: 0.85rem;
     color: var(--accent-hot);
+}
+
+.contact-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.contact-form-error {
+    margin: 0.85rem 0 0;
+    padding: 0.75rem 0.9rem;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    max-width: 48ch;
+    border-radius: 6px;
+    border: 1px solid rgba(198, 40, 40, 0.4);
+    background: rgba(198, 40, 40, 0.08);
+    color: var(--text);
+}
+body.theme-dark .contact-form-error {
+    border-color: rgba(239, 154, 154, 0.35);
+    background: rgba(239, 83, 80, 0.12);
+}
+
+.contact-submit:disabled {
+    opacity: 0.65;
+    cursor: wait;
+    transform: none;
 }
 
 /* Scrollbar */

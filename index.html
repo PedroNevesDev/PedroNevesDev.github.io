@@ -78,10 +78,10 @@
                         <span class="scene-num">01</span>
                         <h2 class="scene-title">About</h2>
                         <div class="about-me-text-container">
-                            <p class="about-me-text">I'm Pedro Neves — I build games and tools in Unity and Unreal, mostly in C#. I teach Unity development in Portugal.</p>
-                            <p class="about-me-text">I love game development end to end: narrative and design, technical art, and VFX. I'm picky about how things look. Depending on the project I lean into 3D, pixel art, or drawing; other times I'm in Shader Graph writing my own shaders, or tuning lighting and post-processing.</p>
-                            <p class="about-me-text">I'm at home in the Adobe suite, Blender, Unity, Git, and Notion: art and motion, 3D, the engine, version control, and keeping projects from exploding.</p>
-                            <p class="about-me-text">What's here is the messy middle of a career: game jams, course work, prototypes, and a few Erasmus apps shipped to web and mobile. I gravitate toward ideas that twist familiar mechanics into something stranger.</p>
+                            <p class="about-me-text">I'm Pedro Neves. I build games and tools in Unity and Unreal, mostly in C#, and I teach Unity here in Portugal.</p>
+                            <p class="about-me-text">I get into all of it — story and design, tech art, VFX. I care a lot about how things look. Sometimes I'm in 3D for months, sometimes pixel or drawing; sometimes I'm deep in Shader Graph, or fussing with lights and post until it feels right.</p>
+                            <p class="about-me-text">Most days I'm in Adobe, Blender, Unity, Git, and Notion — art and motion, 3D, the engine, version control, and keeping the chaos sort of under control.</p>
+                            <p class="about-me-text">This site is the messy middle of a career: jams, coursework, prototypes, and a few Erasmus apps that made it to web and mobile. I like ideas that take a familiar mechanic and bend it into something a bit weird.</p>
                             <p class="about-resume">
                                 <a href="CV_compressed_links.pdf" class="about-resume__link" download="CV_compressed_links.pdf">Download CV (PDF)</a>
                             </p>
@@ -158,13 +158,17 @@
                             <label class="contact-label" for="contact-message">Message</label>
                             <textarea class="contact-input contact-textarea" id="contact-message" name="message" required rows="5" maxlength="8000" placeholder="Write your message…"></textarea>
 
+                            <input type="text" name="_gotcha" class="contact-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
                             <div class="contact-recaptcha" id="contact-recaptcha-wrap">
                                 <div id="contact-recaptcha" class="contact-recaptcha__widget"></div>
                                 <p class="contact-recaptcha__error" id="contact-recaptcha-error" role="alert" hidden></p>
                             </div>
 
-                            <button type="submit" class="contact-submit">Send via email</button>
-                            <p class="contact-note">Uses your default mail app. Nothing is stored on this site.</p>
+                            <button type="submit" class="contact-submit" id="contact-submit">Send message</button>
+                            <p class="contact-form-error" id="contact-form-error" role="alert" hidden></p>
+                            <p class="contact-success" id="contact-success" role="status" aria-live="polite" hidden></p>
+                            <p class="contact-note">Delivered by email — nothing is stored on this site.</p>
                         </form>
                     </div>
                 </div>
