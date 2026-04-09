@@ -1,12 +1,15 @@
 /**
  * Site-wide keys (edit for production).
- * reCAPTCHA: create v2 “I’m not a robot” keys at https://www.google.com/recaptcha/admin
- * Default below is Google’s public test key (always passes) — replace with your site key for github.io.
+ * reCAPTCHA v2: https://www.google.com/recaptcha/admin — add your GitHub Pages hostname
+ * (e.g. pedronevesdev.github.io) or the form stays blocked with “Invalid domain for site key”.
+ *
+ * Default is empty so the contact form works on github.io without setup. FormSubmit still has
+ * a honeypot. Set a real site key string below when you want the checkbox.
  */
 window.RECAPTCHA_SITE_KEY =
     typeof window.RECAPTCHA_SITE_KEY === 'string' && window.RECAPTCHA_SITE_KEY.length > 0
         ? window.RECAPTCHA_SITE_KEY
-        : '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
+        : '';
 
 /**
  * Ambient 3D background.
