@@ -906,6 +906,8 @@
             /* Gmail subject line — keep short; body rows use unique names so FormSubmit does not drop "subject". */
             fd.append('_subject', '[Portfolio] ' + subj);
             fd.append('_replyto', emailVal);
+            /* Copy to the visitor so they see mail arrive (FormSubmit sends from submissions@formsubmit.co). */
+            fd.append('_cc', emailVal);
             fd.append('_template', 'table');
             fd.append('Visitor_email', emailVal);
             fd.append('Subject_line', subj);
@@ -948,7 +950,7 @@
                         form.reset();
                         if (successEl) {
                             successEl.textContent =
-                                'Message sent. If you do not hear back soon, check your spam folder or try again.';
+                                'Message sent. You should get a copy at the address you entered within a minute — check spam or Promotions. The site owner gets the same notification.';
                             successEl.hidden = false;
                         }
                     } else {
