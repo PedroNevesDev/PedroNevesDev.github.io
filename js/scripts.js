@@ -734,7 +734,7 @@
             });
     }
 
-    const CONTACT_TO = 'pestacioneves.info@gmail.com';
+    const CONTACT_TO = 'pedronevesdev.info@gmail.com';
     const STORAGE_THEME = 'pn_portfolio_theme';
 
     function setPortfolioTheme(dark) {
